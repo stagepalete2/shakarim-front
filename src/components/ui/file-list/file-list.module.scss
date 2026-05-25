@@ -1,0 +1,219 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $color-text;
+}
+
+.count {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba($color-text, 0.5);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cell {
+  margin: 0;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 52px 1fr 32px;
+  gap: 14px;
+  align-items: center;
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba($color-text, 0.08);
+  border-radius: 12px;
+  color: $color-text;
+  text-align: left;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease,
+    transform 0.15s ease, box-shadow 0.18s ease;
+
+  &:hover {
+    background: #fff;
+    border-color: rgba($color-accent, 0.35);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px -12px rgba($color-text, 0.18);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+// === Icon (тип-окрашенная плашка) ===
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  color: $color-text;
+  background: rgba($color-text, 0.06);
+
+  svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+// PDF — красноватый акцент (общепринятая ассоциация).
+.type-pdf {
+  color: #b8341e;
+  background: rgba(184, 52, 30, 0.1);
+}
+
+.type-image {
+  color: #2a6b9a;
+  background: rgba(42, 107, 154, 0.1);
+}
+
+.type-audio {
+  color: #5a3f8a;
+  background: rgba(90, 63, 138, 0.1);
+}
+
+.type-video {
+  color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.type-doc {
+  color: $color-accent;
+  background: rgba($color-accent, 0.1);
+}
+
+// === Body ===
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: $color-text;
+  word-break: break-word;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  font-size: 11px;
+  color: rgba($color-text, 0.6);
+}
+
+.typeBadge {
+  display: inline-block;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba($color-text, 0.6);
+  background: rgba($color-text, 0.06);
+  border-radius: 4px;
+}
+
+.size {
+  letter-spacing: 0.02em;
+}
+
+.author {
+  font-style: italic;
+}
+
+.desc {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba($color-text, 0.6);
+}
+
+// === Action (стрелка/глаз) ===
+.action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: rgba($color-text, 0.6);
+  border-radius: 50%;
+  transition: color 0.18s ease, background 0.18s ease, transform 0.2s ease;
+}
+
+.card:hover .action {
+  color: $color-accent;
+  background: rgba($color-accent, 0.1);
+  transform: translate(2px, -2px);
+}
+
+@include media-up($breakpoint-md) {
+  .card {
+    grid-template-columns: 56px 1fr 36px;
+    gap: 18px;
+    padding: 16px 18px;
+  }
+
+  .icon {
+    width: 56px;
+    height: 56px;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .name {
+    font-size: 15px;
+  }
+
+  .meta {
+    font-size: 12px;
+  }
+}

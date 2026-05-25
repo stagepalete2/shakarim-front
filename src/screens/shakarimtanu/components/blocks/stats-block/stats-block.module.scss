@@ -1,0 +1,52 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/shakarimtanu" as *;
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 16px;
+  margin: 0;
+  padding: 24px 20px;
+  background: #fff;
+  border-top: 1px solid $tanu-line-strong;
+  border-bottom: 1px solid $tanu-line-strong;
+}
+
+.cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+}
+
+.value {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: $color-accent;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $tanu-faint;
+}
+
+@include media-up($breakpoint-md) {
+  .row {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding: 32px 28px;
+  }
+
+  .label {
+    font-size: 12px;
+  }
+}

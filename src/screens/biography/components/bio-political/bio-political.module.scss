@@ -1,0 +1,209 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/biography" as *;
+
+.section {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: $bio-column-max;
+}
+
+.eyebrow { @include bio-eyebrow; }
+
+.title {
+  margin: 0;
+  @include bio-display(26px, 4.5vw, 40px);
+}
+
+.intro {
+  margin: 8px 0 0;
+  max-width: 60ch;
+  font-size: 16px;
+  line-height: 1.6;
+  color: $bio-muted;
+}
+
+// === Events list ===
+.events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid $bio-line;
+}
+
+.eventCell {
+  margin: 0;
+  border-bottom: 1px solid $bio-line;
+}
+
+.event {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 16px;
+  padding: 22px 0;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: $bio-sepia-soft;
+  }
+}
+
+.eventMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eventYear {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: $bio-sepia;
+}
+
+.eventDivider {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: $bio-sepia;
+  opacity: 0.4;
+}
+
+.eventBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.eventTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $bio-ink;
+}
+
+.eventDesc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: $bio-muted;
+  max-width: 64ch;
+}
+
+// Архивная подпись/цитата документа.
+.eventCitation {
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px dashed $bio-line;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $bio-faint;
+  font-style: italic;
+}
+
+.eventFigure {
+  display: none;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: $bio-paper;
+  // Sepia-tinted рамка для документального ощущения.
+  border: 1px solid $bio-line-strong;
+  box-shadow: 0 6px 18px -8px rgba($bio-sepia, 0.35);
+}
+
+.eventFigureImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  // Лёгкий sepia-фильтр — единый «архивный» тон.
+  filter: sepia(0.15);
+}
+
+// === Quote ===
+.quote {
+  margin: 16px 0 0;
+  padding: 24px;
+  background: $bio-paper;
+  border-left: 3px solid $bio-sepia;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quoteText {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.5;
+  font-style: italic;
+  letter-spacing: -0.005em;
+  color: $bio-ink;
+}
+
+.quoteAttr {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: $bio-sepia;
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 48px;
+  }
+
+  .event {
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    padding: 28px 0;
+  }
+
+  .eventYear {
+    font-size: 28px;
+  }
+
+  .eventTitle {
+    font-size: 22px;
+  }
+
+  .eventDesc {
+    font-size: 15px;
+  }
+
+  .quoteText {
+    font-size: 22px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .event {
+    grid-template-columns: 160px 1fr 280px;
+    gap: 32px;
+    padding: 32px 0;
+    align-items: start;
+  }
+
+  .eventFigure {
+    display: block;
+  }
+
+  .eventYear {
+    font-size: 32px;
+  }
+}

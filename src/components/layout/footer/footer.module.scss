@@ -1,0 +1,133 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.footer {
+  margin-top: 48px;
+  background-color: $color-accent;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 15px 15px 0 0;
+}
+
+// === Mobile: всё стопкой — лого, навигация, социалки ===
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding-top: 28px;
+  padding-bottom: 24px;
+}
+
+.logoSlot {
+  display: flex;
+}
+
+.navSlot {
+  width: 100%;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navItem {
+  margin: 0;
+}
+
+.navLink {
+  display: inline-block;
+  padding: 4px 0;
+  font-size: 16px;
+  color: rgba(17, 17, 17, 0.7);
+
+  color: white;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: rgba(17, 17, 17, 0.6);
+  background: $color-bg;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  transition: color 0.15s ease, border-color 0.15s ease,
+    background 0.15s ease, transform 0.15s ease;
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    color: $color-accent;
+    border-color: $color-accent;
+    transform: translateY(-2px);
+  }
+}
+
+.bottom {
+  @include container;
+  padding-bottom: 20px;
+  font-size: 12px;
+  color: rgba(17, 17, 17, 0.45);
+}
+
+// === Desktop: три блока в ряд, ссылки в «таблице» 2 колонок ===
+@include media-up($breakpoint-md) {
+  .inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: 48px;
+    padding-top: 40px;
+    padding-bottom: 28px;
+  }
+
+  .navSlot {
+    display: flex;
+    justify-content: center;
+  }
+
+  // 3 строки × 2 колонки = «табличный» вид. 5 элементов: 3 + 2.
+  .navList {
+    display: grid;
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
+    column-gap: 48px;
+    row-gap: 10px;
+  }
+
+  .navLink {
+    font-size: 14px;
+  }
+
+  .socials {
+    align-self: center;
+  }
+
+  .bottom {
+    padding-top: 16px;
+    padding-bottom: 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    text-align: center;
+  }
+}

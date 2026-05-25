@@ -1,0 +1,68 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/shakarimtanu" as *;
+
+.page {
+  background: $tanu-bg;
+  color: $tanu-ink;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-bottom: 80px;
+}
+
+.layout {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tocCol {
+  width: 100%;
+}
+
+.contentCol {
+  display: flex;
+  flex-direction: column;
+  gap: $tanu-section-gap-mobile;
+  // Между секциями — тонкие разделители (через сам отступ).
+}
+
+@include media-up($breakpoint-md) {
+  .page {
+    gap: 56px;
+    padding-bottom: 120px;
+  }
+
+  .contentCol {
+    gap: $tanu-section-gap-desktop;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .page {
+    gap: 80px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 64px;
+    // align-items НЕ ставим в start — иначе .tocCol сжимается до высоты
+    // содержимого TOC, и sticky внутри не может следовать за скроллом
+    // (containing block заканчивается у нижнего края TOC). Default stretch
+    // делает .tocCol высотой со всю строку = высота контентной колонки.
+  }
+
+  .tocCol {
+    // sticky наследуется из .toc внутри
+  }
+}
+
+@include media-up($breakpoint-xl) {
+  .layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 96px;
+  }
+}

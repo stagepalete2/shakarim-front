@@ -1,0 +1,140 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/shakarimtanu" as *;
+
+.toc {
+  width: 100%;
+}
+
+.heading {
+  display: none; // на мобилке прячем — нумерация уже всё говорит
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $tanu-faint;
+  margin-bottom: 14px;
+}
+
+// === Mobile: горизонтальные пилюли со скроллом ===
+.list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin: 0;
+  padding: 4px 16px;
+  margin-inline: -16px;
+  overflow-x: auto;
+  list-style: none;
+  @include hide-scrollbar;
+}
+
+.item {
+  margin: 0;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $tanu-muted;
+  background: transparent;
+  border: 1px solid $tanu-line;
+  border-radius: $radius-pill;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    color: $tanu-ink;
+    background: rgba($tanu-ink, 0.04);
+    border-color: $tanu-line-strong;
+  }
+}
+
+.linkActive {
+  color: #fff;
+  background: $tanu-ink;
+  border-color: $tanu-ink;
+
+  &:hover {
+    color: #fff;
+    background: $tanu-ink;
+  }
+}
+
+.number {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  // ничего особого
+}
+
+// === Desktop: sticky вертикальный сайдбар ===
+@include media-up($breakpoint-lg) {
+  .toc {
+    position: sticky;
+    top: 96px; // 72 (header) + 24 buffer
+  }
+
+  .heading {
+    display: block;
+  }
+
+  .list {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    overflow: visible;
+    padding: 0;
+    margin-inline: 0;
+    gap: 2px;
+  }
+
+  .link {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    font-size: 14px;
+    background: transparent;
+    border: none;
+    border-left: 2px solid transparent;
+    border-radius: 0;
+    text-align: left;
+
+    &:hover {
+      color: $tanu-ink;
+      background: transparent;
+      border-left-color: $tanu-line-strong;
+    }
+  }
+
+  .linkActive {
+    color: $tanu-ink;
+    background: transparent;
+    border-left-color: $color-accent;
+    font-weight: 700;
+
+    &:hover {
+      color: $tanu-ink;
+      background: transparent;
+      border-left-color: $color-accent;
+    }
+  }
+
+  .number {
+    color: $color-accent;
+    opacity: 1;
+    font-weight: 800;
+    min-width: 28px;
+  }
+}

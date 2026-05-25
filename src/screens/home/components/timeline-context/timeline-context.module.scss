@@ -1,0 +1,190 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+// === Mobile: строка в общем потоке, bubble выровнен с dot Шакарима ===
+.context {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  column-gap: 14px;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.line {
+  display: none;
+}
+
+// Белый bubble с иконкой — высокий контраст на бирюзовом.
+.bubble {
+  grid-column: 1;
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: #fff;
+  color: rgba(17, 17, 17, 0.55);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease,
+    background 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: rgba(255, 255, 255, 0.7);
+    outline: none;
+  }
+}
+
+.open .bubble {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.icon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+}
+
+.tooltip {
+  grid-column: 2;
+  display: inline-flex;
+  align-items: baseline;
+  flex-direction: row-reverse; // year слева, label справа: row-reverse т.к. JSX порядок label→year
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.tooltipYear {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.tooltipLabel {
+  font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// === Desktop: zero-height anchor на линии ===
+@include media-up($breakpoint-lg) {
+  .context {
+    position: absolute;
+    left: var(--pos);
+    top: 50%;
+    width: 0;
+    height: 0;
+    display: block;
+    padding: 0;
+  }
+
+  .context .line,
+  .context .bubble,
+  .context .tooltip {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .line {
+    display: block;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .bubble {
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: rgba(17, 17, 17, 0.6);
+
+    &:hover,
+    &:focus-visible {
+      border-color: rgba(255, 255, 255, 0.85);
+      transform: translateX(-50%) scale(1.1);
+    }
+  }
+
+  .open .bubble {
+    background: #fff;
+    border-color: rgba(255, 255, 255, 0.95);
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  // Стек: только год виден всегда; label — поповер по клику.
+  .tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.75);
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .tooltipYear {
+    order: 2; // year всегда ближе к линии
+    color: #fff;
+  }
+
+  .tooltipLabel {
+    order: 1; // label дальше от линии
+    display: none;
+    max-width: 220px;
+    padding: 6px 10px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    white-space: normal;
+    text-align: center;
+    color: $color-text;
+    font-weight: 500;
+    line-height: 1.35;
+    pointer-events: auto;
+    z-index: 30;
+  }
+
+  .open .tooltipLabel {
+    display: block;
+  }
+
+  // Above: всё над осью. row-reverse в flex меняет порядок detection.
+  .above {
+    .line { bottom: 0; height: 18px; }
+    .bubble { bottom: 22px; }
+    .tooltip { bottom: 60px; }
+  }
+
+  // Below: всё под осью. Для below нужен column-reverse, чтобы year был сверху (ближе к линии), label снизу.
+  .below {
+    .line { top: 0; height: 18px; }
+    .bubble { top: 22px; }
+    .tooltip {
+      top: 60px;
+      flex-direction: column-reverse;
+    }
+  }
+}

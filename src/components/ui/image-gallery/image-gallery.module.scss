@@ -1,0 +1,154 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $color-text;
+}
+
+.count {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba($color-text, 0.5);
+}
+
+// === Grid: mobile 2 → tablet 3 → desktop 4 ===
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid rgba($color-text, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #f5e9c8, #ead9b0);
+  cursor: zoom-in;
+  transition: transform 0.2s $ease-out, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.18);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+.thumbImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+
+// Фоллбэк-иконка под изображением. Видна когда .thumbImg не загрузился
+// (Image-компонент прячет броkенный src через display:none).
+.thumbFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba($color-text, 0.3);
+  z-index: 1;
+}
+
+// Кнопка-лупа в углу при ховере (desktop). На тапе на мобилке мигнёт.
+.hoverHint {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s $ease-out;
+  @include glass-blur(4px);
+}
+
+.thumb:hover .hoverHint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.caption {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba($color-text, 0.5);
+  text-align: center;
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .caption {
+    font-size: 13px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}

@@ -1,0 +1,245 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+// === Root: full-screen overlay ===
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: #0a0a0a;
+  animation: fadeIn 0.2s ease;
+  // Берём управление жестами на себя — никакого нативного pinch/scroll.
+  touch-action: none;
+  // Сглаживание текста в caption на тёмном фоне.
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+// === Top bar: счётчик + close ===
+.top {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  // Безопасные зоны (notch) на мобилке.
+  padding-top: calc(12px + env(safe-area-inset-top, 0));
+  padding-left: calc(14px + env(safe-area-inset-left, 0));
+  padding-right: calc(14px + env(safe-area-inset-right, 0));
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.6),
+    transparent
+  );
+  color: #fff;
+  pointer-events: none;
+
+  // Чтобы клик по кнопкам работал, а по фону top — нет.
+  & > * {
+    pointer-events: auto;
+  }
+}
+
+.counter {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: $radius-pill;
+  @include glass-blur(8px);
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
+// === Viewport: контейнер для изображения с жестами ===
+.viewport {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+  // Размер картинки управляется через transform — origin в центре.
+}
+
+.image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform-origin: center center;
+  // Запрещаем браузеру свой обработчик долгого нажатия (сохранение картинки).
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  will-change: transform;
+}
+
+// === Nav buttons ===
+.navBtn {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+  @include glass-blur(8px);
+  transition: background 0.18s ease, transform 0.15s ease, opacity 0.2s ease;
+  // На мобилке кнопки навигации лишние — есть свайп.
+  opacity: 0;
+  pointer-events: none;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.94);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
+.navPrev {
+  left: 12px;
+  left: calc(12px + env(safe-area-inset-left, 0));
+}
+
+.navNext {
+  right: 12px;
+  right: calc(12px + env(safe-area-inset-right, 0));
+}
+
+// === Caption ===
+.caption {
+  position: relative;
+  z-index: 3;
+  padding: 14px 18px;
+  padding-bottom: calc(14px + env(safe-area-inset-bottom, 0));
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.65),
+    transparent
+  );
+}
+
+// === Hint ===
+.hint {
+  position: absolute;
+  bottom: calc(60px + env(safe-area-inset-bottom, 0));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: $radius-pill;
+  @include glass-blur(6px);
+  pointer-events: none;
+  // Скрываем через 3 секунды после открытия (анимация).
+  animation: hintFade 4s ease forwards;
+}
+
+@keyframes hintFade {
+  0%, 60% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+// === Desktop: показываем nav-кнопки, прячем подсказку (есть курсор) ===
+@include media-up($breakpoint-md) {
+  .top {
+    padding: 16px 20px;
+    padding-top: calc(16px + env(safe-area-inset-top, 0));
+  }
+
+  .counter {
+    font-size: 14px;
+    padding: 6px 14px;
+  }
+
+  .closeBtn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .navBtn {
+    width: 48px;
+    height: 48px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .navPrev { left: 20px; }
+  .navNext { right: 20px; }
+
+  .caption {
+    font-size: 14px;
+    padding: 18px 22px;
+  }
+
+  .hint {
+    display: none;
+  }
+}

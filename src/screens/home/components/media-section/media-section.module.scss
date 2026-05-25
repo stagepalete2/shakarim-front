@@ -1,0 +1,82 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+// === Mobile: одна колонка, видео сверху, аудио снизу ===
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.videoCol,
+.audioCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.colTitle {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: $color-text;
+}
+
+.audioList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  // Убираем border-bottom у самого последнего AudioCard,
+  // чтобы не было лишней линии перед «Показать все».
+  li:last-child article {
+    border-bottom: none;
+  }
+}
+
+.audioAll {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-top: 12px;
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-accent;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// === Desktop: 2 колонки, видео шире (2fr), аудио — сайдбар (1fr) ===
+@include media-up($breakpoint-lg) {
+  .section {
+    gap: 36px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .colTitle {
+    font-size: 20px;
+  }
+
+  .audioAll {
+    font-size: 14px;
+  }
+}

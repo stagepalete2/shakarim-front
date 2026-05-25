@@ -1,0 +1,219 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/biography" as *;
+
+.section {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  align-items: center;
+}
+
+.eyebrow { @include bio-eyebrow; }
+
+.title {
+  margin: 0;
+  @include bio-display(26px, 4.5vw, 40px);
+}
+
+// === Stage ===
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  // Анимация появления нового слайда — key-сброс перезапускает.
+  animation: slideIn 0.45s $ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.figure {
+  margin: 0;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: $bio-paper;
+  border-radius: 8px;
+  box-shadow: 0 24px 48px -24px rgba($bio-sepia, 0.45);
+}
+
+.figureImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// === Quote ===
+.quote {
+  position: relative;
+  margin: 0;
+  padding: 24px 20px 20px;
+  max-width: $bio-reading-max;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.mark {
+  display: block;
+  font-size: 64px;
+  line-height: 0.6;
+  color: $bio-sepia;
+  opacity: 0.45;
+  margin-bottom: 8px;
+}
+
+.quoteText {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  font-style: italic;
+  color: $bio-ink;
+}
+
+.attr {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.source {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-style: normal;
+  color: $bio-sepia;
+}
+
+.year {
+  font-size: 12px;
+  color: $bio-faint;
+}
+
+// === Controls ===
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: $bio-sepia;
+  background: transparent;
+  border: 1px solid $bio-line-strong;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+
+  &:hover {
+    background: $bio-sepia-soft;
+    border-color: $bio-sepia;
+  }
+}
+
+.dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  background: $bio-line-strong;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: $bio-sepia;
+  }
+}
+
+.dotActive {
+  background: $bio-sepia;
+  transform: scale(1.4);
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 40px;
+  }
+
+  .quoteText {
+    font-size: 22px;
+  }
+
+  .quote {
+    padding: 32px 24px 24px;
+  }
+
+  .mark {
+    font-size: 80px;
+  }
+
+  .arrow {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .slideWithImage {
+    flex-direction: row;
+    align-items: center;
+    gap: 56px;
+  }
+
+  .slideWithImage .figure {
+    flex: 0 0 45%;
+    max-width: 45%;
+    aspect-ratio: 4 / 3;
+  }
+
+  .slideWithImage .quote {
+    flex: 1;
+    text-align: left;
+    margin-inline: 0;
+  }
+
+  .slideWithImage .attr {
+    align-items: flex-start;
+  }
+
+  .quoteText {
+    font-size: 24px;
+  }
+}

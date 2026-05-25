@@ -1,0 +1,49 @@
+@use "@/styles/variables" as *;
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.button {
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: rgba(17, 17, 17, 0.55);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    color: $color-text;
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+.active {
+  color: $color-bg;
+  background: $color-accent;
+
+  &:hover {
+    color: $color-bg;
+    background: $color-accent;
+  }
+}
+
+.size-sm .button {
+  padding: 4px 6px;
+  font-size: 12px;
+}
+
+.size-md .button {
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.size-lg .button {
+  padding: 8px 14px;
+  font-size: 14px;
+}

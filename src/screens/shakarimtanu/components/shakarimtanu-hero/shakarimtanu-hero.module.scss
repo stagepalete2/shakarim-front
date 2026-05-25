@@ -1,0 +1,60 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/shakarimtanu" as *;
+
+.hero {
+  padding-block: 48px 0;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 880px;
+}
+
+.eyebrow {
+  @include tanu-eyebrow;
+}
+
+.title {
+  margin: 0;
+  @include tanu-display(40px, 8vw, 88px);
+}
+
+.lead {
+  margin: 8px 0 0;
+  max-width: 60ch;
+  font-size: 17px;
+  line-height: 1.65;
+  color: $tanu-muted;
+}
+
+.divider {
+  width: 60px;
+  height: 1px;
+  background: $tanu-line-strong;
+  border: none;
+  margin: 16px 0 0;
+}
+
+@include media-up($breakpoint-md) {
+  .hero {
+    padding-block: 80px 0;
+  }
+
+  .inner {
+    gap: 20px;
+  }
+
+  .lead {
+    font-size: 19px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .hero {
+    padding-block: 120px 0;
+  }
+}

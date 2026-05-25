@@ -1,0 +1,133 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.titleBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: $color-text;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(17, 17, 17, 0.6);
+  margin: 0;
+}
+
+.allLink {
+  font-size: 13px;
+  font-weight: 500;
+  color: $color-accent;
+  text-decoration: none;
+  align-self: baseline;
+  flex-shrink: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// === Variant: row (title слева, link справа) ===
+.align-row {
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+// === Variant: center (всё по центру, акцент-полоса под title) ===
+.align-center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  .titleBlock {
+    align-items: center;
+  }
+
+  .title::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 3px;
+    margin: 14px auto 0;
+    background: linear-gradient(90deg, $color-accent, rgba(10, 102, 194, 0.3));
+    border-radius: 2px;
+  }
+
+  .description {
+    max-width: 520px;
+    margin-top: 14px;
+  }
+}
+
+// === Tone: для размещения поверх тёмного/акцентного фона ===
+.tone-onAccent {
+  .eyebrow {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .title {
+    color: #fff;
+  }
+  .description {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .allLink {
+    color: #fff;
+  }
+}
+
+.tone-onAccent.align-row {
+  border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+
+.tone-onAccent.align-center .title::after {
+  background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.3));
+}
+
+@include media-up($breakpoint-md) {
+  .title {
+    font-size: 32px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+
+  .allLink {
+    font-size: 14px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .title {
+    font-size: 36px;
+  }
+
+  .align-center .title {
+    font-size: 40px;
+  }
+}

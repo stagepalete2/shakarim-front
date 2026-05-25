@@ -1,0 +1,148 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+
+// === Mobile: горизонтальные чипы со скроллом (как в App Store / Spotify) ===
+.sidebar {
+  width: 100%;
+}
+
+.title {
+  display: none; // на мобилке заголовок «Жанры» избыточен
+}
+
+.list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 8px;
+  margin: 0;
+  padding: 4px 16px;
+  margin-inline: -16px;
+  overflow-x: auto;
+  list-style: none;
+  -webkit-overflow-scrolling: touch;
+  @include hide-scrollbar;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  // UA-стиль <button> ставит text-align: center — перебиваем, чтобы
+  // длинные жанры («Тарихи, танымдық еңбектері») при переносе на
+  // десктопе выравнивались по левому краю.
+  text-align: left;
+  color: $color-text;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid transparent;
+  border-radius: $radius-pill;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease,
+    border-color 0.18s ease, transform 0.15s ease;
+
+  &:hover {
+    background: rgba($color-accent, 0.08);
+    color: $color-accent;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.itemActive {
+  color: #fff;
+  background: $color-accent;
+  border-color: $color-accent;
+
+  &:hover {
+    color: #fff;
+    background: $color-accent;
+  }
+}
+
+.itemLabel {
+  // ничего
+}
+
+.itemCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  padding: 1px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(17, 17, 17, 0.55);
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: $radius-pill;
+  transition: all 0.18s ease;
+}
+
+.itemActive .itemCount {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+// === Desktop: вертикальный sticky-сайдбар ===
+@include media-up($breakpoint-lg) {
+  .sidebar {
+    position: sticky;
+    top: 24px;
+    width: 100%;
+  }
+
+  .title {
+    display: block;
+    margin: 0 0 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(17, 17, 17, 0.5);
+  }
+
+  .list {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 2px;
+    overflow: visible;
+    padding: 0;
+    margin: 0;
+  }
+
+  .item {
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 14px;
+    font-size: 14px;
+    background: transparent;
+    border-radius: 10px;
+    white-space: normal;
+
+    &:hover {
+      background: rgba($color-accent, 0.06);
+      color: $color-accent;
+    }
+  }
+
+  .itemActive {
+    background: rgba($color-accent, 0.1);
+    color: $color-accent;
+    border-color: transparent;
+
+    &:hover {
+      background: rgba($color-accent, 0.12);
+    }
+  }
+
+  .itemActive .itemCount {
+    color: $color-accent;
+    background: rgba($color-accent, 0.15);
+  }
+}

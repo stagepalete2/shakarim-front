@@ -1,0 +1,37 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.section {
+  width: 100%;
+}
+
+// Mobile: 2×2 (на 3 карточки — 2+1, на 4 — 2×2, и т.д.).
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  margin: 0;
+  display: flex; // чтобы карточка-Link тянулась на всю ячейку
+}
+
+// Desktop: все в ряд. auto-fit подстраивает количество колонок
+// под число карточек (3 → 3 кол, 4 → 4 кол, и т.д.), не ломаясь
+// на узких десктопах.
+@include media-up($breakpoint-md) {
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .grid {
+    gap: 20px;
+  }
+}

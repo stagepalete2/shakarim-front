@@ -1,0 +1,128 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/shakarimtanu" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $tanu-ink;
+}
+
+// === Mobile: вертикальная лента с осью слева ===
+.track {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 28px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: $tanu-line-strong;
+  }
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dot {
+  position: absolute;
+  left: -28px;
+  top: 6px;
+  width: 15px;
+  height: 15px;
+  background: $tanu-bg;
+  border: 2px solid $color-accent;
+  border-radius: 50%;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.year {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: $color-accent;
+  font-variant-numeric: tabular-nums;
+}
+
+.event {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: $tanu-ink;
+}
+
+.desc {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: $tanu-muted;
+}
+
+@include media-up($breakpoint-md) {
+  .title {
+    font-size: 20px;
+  }
+
+  .event {
+    font-size: 16px;
+  }
+
+  .desc {
+    font-size: 14px;
+  }
+}
+
+// === Desktop: горизонтальная лента ===
+@include media-up($breakpoint-lg) {
+  .track {
+    flex-direction: row;
+    padding: 28px 0 0;
+    gap: 0;
+
+    &::before {
+      left: 0;
+      right: 0;
+      top: 7px;
+      bottom: auto;
+      width: auto;
+      height: 1px;
+    }
+  }
+
+  .step {
+    flex: 1;
+    padding-right: 16px;
+  }
+
+  .dot {
+    position: absolute;
+    left: 0;
+    top: -28px;
+  }
+}

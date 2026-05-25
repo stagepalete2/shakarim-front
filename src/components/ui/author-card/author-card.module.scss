@@ -1,0 +1,98 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: $color-text;
+  text-decoration: none;
+  text-align: center;
+}
+
+// Квадратный контейнер — любое исходное разрешение фото красиво
+// обрезается через object-fit: cover. Гарантирует одинаковый вид
+// карточек независимо от размеров загруженных файлов.
+.photoWrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.02));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s $ease-out, box-shadow 0.35s $ease-out;
+
+  // Внутренний highlight сверху — лёгкий «портретный» объём.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+.card:hover .photoWrap {
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 40px -10px rgba(10, 102, 194, 0.18),
+    0 8px 16px -4px rgba(0, 0, 0, 0.05);
+}
+
+.photo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  // Для портретов лучше top: оставит лицо при кропе высоких фото.
+  object-position: top center;
+  transition: transform 0.6s $ease-out;
+}
+
+.card:hover .photo {
+  transform: scale(1.06);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-inline: 4px;
+}
+
+.name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  color: $color-text;
+  transition: color 0.2s ease;
+}
+
+.card:hover .name {
+  color: $color-accent;
+}
+
+.role {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(17, 17, 17, 0.55);
+  margin: 0;
+  @include line-clamp(2);
+}
+
+@include media-up($breakpoint-md) {
+  .photoWrap {
+    border-radius: 18px;
+  }
+
+  .name {
+    font-size: 15px;
+  }
+
+  .role {
+    font-size: 13px;
+  }
+}

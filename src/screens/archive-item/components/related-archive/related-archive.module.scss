@@ -1,0 +1,31 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px 12px;
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 32px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 18px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .grid {
+    gap: 28px 22px;
+  }
+}

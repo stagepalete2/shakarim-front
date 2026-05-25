@@ -1,0 +1,232 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/archive-types" as *;
+
+// === Root: full-screen overlay ===
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 18, 14, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+// === Panel: full-screen на мобилке, centered modal на десктопе ===
+.panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  // Mobile: full-screen, без рамок.
+}
+
+// === Top bar ===
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  // Безопасные зоны iPhone notch.
+  padding-top: calc(10px + env(safe-area-inset-top, 0));
+  padding-left: calc(12px + env(safe-area-inset-left, 0));
+  padding-right: calc(12px + env(safe-area-inset-right, 0));
+  background: $archive-ink;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.titleWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.typeBadge {
+  flex-shrink: 0;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #fff;
+  background: #b8341e;
+  border-radius: 4px;
+}
+
+.name {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.size {
+  flex-shrink: 0;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.55);
+  // На мобилке прячем — не хватает места.
+  display: none;
+}
+
+// === Actions ===
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.15s ease;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
+.closeBtn {
+  // Чуть крупнее остальных, чтобы прицельно тапать.
+}
+
+// === Viewer (iframe + loader) ===
+.viewer {
+  position: relative;
+  flex: 1;
+  background: #525659; // тёмный нейтральный фон, как у нативных PDF viewers
+  overflow: hidden;
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+}
+
+// === Loading ===
+.loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #525659;
+  color: rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+}
+
+.spinner {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-top-color: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingText {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+// === Tablet+ ===
+@include media-up($breakpoint-md) {
+  .top {
+    padding: 12px 16px;
+    padding-top: calc(12px + env(safe-area-inset-top, 0));
+  }
+
+  .name {
+    font-size: 14px;
+  }
+
+  .size {
+    display: inline;
+  }
+
+  .actionBtn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+// === Desktop: centered modal вместо full-screen ===
+@include media-up($breakpoint-lg) {
+  .root {
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .panel {
+    width: 100%;
+    max-width: 1100px;
+    height: calc(100vh - 64px);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.5);
+  }
+
+  .top {
+    padding: 14px 18px;
+    padding-top: 14px; // safe-area не нужен — есть отступ от верха
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .name {
+    font-size: 15px;
+  }
+}

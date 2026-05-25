@@ -1,0 +1,255 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/biography" as *;
+
+.section {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: $bio-column-max;
+}
+
+.eyebrow { @include bio-eyebrow; }
+
+.title {
+  margin: 0;
+  @include bio-display(26px, 4.5vw, 40px);
+}
+
+.intro {
+  margin: 8px 0 0;
+  max-width: 65ch;
+  font-size: 16px;
+  line-height: 1.65;
+  color: $bio-muted;
+}
+
+.subhead {
+  margin: 0 0 16px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $bio-faint;
+}
+
+// === Influences ===
+.influences {
+  display: flex;
+  flex-direction: column;
+}
+
+.influencesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.influenceCell {
+  margin: 0;
+}
+
+.influence {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 18px;
+  padding: 20px;
+  background: $bio-paper;
+  border: 1px solid $bio-line;
+  border-radius: 14px;
+  position: relative;
+  // «Рукописный» декор — sepia-линия слева, ощущение manuscript.
+  &::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    bottom: 20px;
+    left: 0;
+    width: 3px;
+    background: $bio-sepia;
+    border-radius: 0 2px 2px 0;
+  }
+  transition: transform 0.25s $ease-out, border-color 0.2s ease;
+
+  &:hover {
+    border-color: $bio-line-strong;
+    transform: translateY(-2px);
+  }
+}
+
+.portraitWrap {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: $bio-bg;
+  border: 2px solid $bio-line;
+}
+
+.portrait,
+.portraitFallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portraitFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $bio-sepia-soft;
+  color: $bio-sepia;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.infBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.era {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $bio-sepia;
+}
+
+.infName {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $bio-ink;
+}
+
+.contribution {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: $bio-muted;
+}
+
+.infQuote {
+  margin: 10px 0 0;
+  padding-left: 12px;
+  border-left: 2px solid $bio-line-strong;
+  font-size: 13px;
+  line-height: 1.5;
+  font-style: italic;
+  color: rgba($bio-ink, 0.78);
+}
+
+// === Works (reading journey) ===
+.works {
+  display: flex;
+  flex-direction: column;
+}
+
+.worksList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $bio-line;
+}
+
+.workRow {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid $bio-line;
+  align-items: baseline;
+  transition: background 0.18s ease;
+
+  &:hover {
+    background: $bio-sepia-soft;
+  }
+}
+
+.workYear {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: $bio-sepia;
+}
+
+.workTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: $bio-ink;
+  letter-spacing: -0.005em;
+}
+
+.workType {
+  display: none;
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 56px;
+  }
+
+  .intro {
+    font-size: 18px;
+  }
+
+  .influencesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+  }
+
+  .influence {
+    padding: 24px;
+  }
+
+  .infName {
+    font-size: 19px;
+  }
+
+  .contribution {
+    font-size: 14px;
+  }
+
+  .infQuote {
+    font-size: 14px;
+  }
+
+  .workRow {
+    grid-template-columns: 80px 1fr 140px;
+    padding: 16px 0;
+  }
+
+  .workTitle {
+    font-size: 16px;
+  }
+
+  .workType {
+    display: inline;
+    text-align: right;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: $bio-faint;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .influencesGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+}

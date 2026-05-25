@@ -1,0 +1,218 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/biography" as *;
+
+.section {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.eyebrow { @include bio-eyebrow; }
+
+.title {
+  margin: 0;
+  @include bio-display(26px, 4.5vw, 40px);
+}
+
+// === Tree ===
+.tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.node {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// === Card ===
+.card {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background: $bio-paper;
+  border: 1px solid $bio-line;
+  border-radius: 14px;
+  transition: border-color 0.2s ease, transform 0.2s $ease-out;
+
+  &:hover {
+    border-color: $bio-line-strong;
+  }
+}
+
+.cardOpen {
+  border-color: $bio-sepia;
+}
+
+.portrait {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: $bio-bg;
+  border: 2px solid $bio-line;
+}
+
+.portraitImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.relation {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $bio-sepia;
+}
+
+.name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $bio-ink;
+}
+
+.desc {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: $bio-muted;
+}
+
+// === Toggle ===
+.toggle {
+  align-self: flex-start;
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $bio-sepia;
+  background: transparent;
+  border: 1px solid $bio-line-strong;
+  border-radius: $radius-pill;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    background: $bio-sepia-soft;
+    border-color: $bio-sepia;
+  }
+}
+
+.toggleIcon {
+  transition: transform 0.2s ease;
+}
+
+.toggleIconOpen {
+  transition: transform 0.2s ease;
+  transform: rotate(180deg);
+}
+
+// === Children: визуальный отступ + соединительная линия ===
+.children {
+  margin: 0;
+  padding: 0 0 0 32px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 12px;
+    width: 1px;
+    background: $bio-line-strong;
+  }
+
+  // Каждый ребёнок «выкладывается» горизонтальной чертой от оси.
+  & > .node > .card::before {
+    content: "";
+    position: absolute;
+    left: -22px;
+    top: 32px;
+    width: 22px;
+    height: 1px;
+    background: $bio-line-strong;
+  }
+
+  & > .node {
+    position: relative;
+  }
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 48px;
+  }
+
+  .card {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .portrait {
+    flex: 0 0 80px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .name {
+    font-size: 18px;
+  }
+
+  .desc {
+    font-size: 14px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  // На десктопе ограничиваем ширину карточки для аккуратного дерева.
+  .card {
+    max-width: 520px;
+  }
+
+  .children {
+    padding-left: 48px;
+
+    &::before {
+      left: 18px;
+    }
+
+    & > .node > .card::before {
+      left: -30px;
+      width: 30px;
+    }
+  }
+}

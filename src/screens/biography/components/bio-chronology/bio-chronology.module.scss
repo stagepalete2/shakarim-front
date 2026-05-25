@@ -1,0 +1,220 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/biography" as *;
+
+.section {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: $bio-column-max;
+}
+
+.eyebrow {
+  @include bio-eyebrow;
+}
+
+.title {
+  margin: 0;
+  @include bio-display(28px, 5vw, 48px);
+}
+
+// === Track (вертикальная ось) ===
+.track {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  // Мобильная ось — слева, через всю длину.
+  &::before {
+    content: "";
+    position: absolute;
+    left: 11px;
+    top: 4px;
+    bottom: 4px;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      $bio-line-strong 12%,
+      $bio-line-strong 88%,
+      transparent
+    );
+  }
+}
+
+.item {
+  position: relative;
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.marker {
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot {
+  display: block;
+  width: 11px;
+  height: 11px;
+  background: $bio-bg;
+  border: 2px solid $bio-sepia;
+  border-radius: 50%;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.item:hover .dot {
+  background: $bio-sepia;
+  transform: scale(1.15);
+}
+
+// === Card ===
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  background: $bio-paper;
+  border: 1px solid $bio-line;
+  border-radius: 14px;
+  // Лёгкий лифт на hover — для интерактивного ощущения.
+  transition: transform 0.3s $ease-out, box-shadow 0.3s $ease-out;
+}
+
+.item:hover .card {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px -16px rgba($bio-ink, 0.18);
+}
+
+.year {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: $bio-sepia;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: $bio-ink;
+}
+
+.cardText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: $bio-muted;
+}
+
+.imageWrap {
+  position: relative;
+  margin-top: 6px;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba($bio-ink, 0.04);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// === Tablet: ось остаётся слева, карточки растягиваются ===
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 48px;
+  }
+
+  .track {
+    gap: 36px;
+  }
+
+  .card {
+    padding: 22px 26px;
+  }
+
+  .cardTitle {
+    font-size: 20px;
+  }
+
+  .cardText {
+    font-size: 15px;
+  }
+}
+
+// === Desktop: alternating layout с осью по центру ===
+@include media-up($breakpoint-lg) {
+  .track {
+    gap: 56px;
+
+    &::before {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .item {
+    width: 50%;
+    padding: 0;
+  }
+
+  .marker {
+    position: absolute;
+    top: 18px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .dot {
+    width: 13px;
+    height: 13px;
+  }
+
+  .card {
+    padding: 24px 28px;
+  }
+
+  .side-left {
+    align-self: flex-start;
+    padding-right: 48px;
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .side-left .marker {
+    right: -14px;
+    left: auto;
+  }
+
+  .side-right {
+    align-self: flex-end;
+    padding-left: 48px;
+  }
+
+  .side-right .marker {
+    left: -14px;
+  }
+}

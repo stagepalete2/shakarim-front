@@ -1,0 +1,101 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/shakarimtanu" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  // Якорный отступ — чтобы header сайта не закрывал заголовок при scroll-to.
+  scroll-margin-top: 80px;
+}
+
+// === Head: number + title ===
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.number {
+  @include tanu-section-number;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.title {
+  margin: 0;
+  @include tanu-display(26px, 4.5vw, 40px);
+}
+
+// === Lead-абзац (выделяется размером) ===
+.lead {
+  margin: 8px 0 0;
+  max-width: 680px;
+  font-size: 17px;
+  line-height: 1.65;
+  letter-spacing: -0.005em;
+  color: $tanu-ink;
+  // Лёгкая «врезка» — sepia-полоска слева.
+  padding-left: 16px;
+  border-left: 2px solid $color-accent;
+}
+
+// === Body (HTML контент) ===
+.body {
+  margin-top: 8px;
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 24px;
+  }
+
+  .head {
+    gap: 12px;
+  }
+
+  .lead {
+    font-size: 19px;
+    padding-left: 20px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .section {
+    gap: 28px;
+    // scroll-margin побольше — у TOC активный элемент должен быть виден.
+    scroll-margin-top: 100px;
+  }
+
+  // На десктопе number стоит «над» заголовком, выровнен по левому краю.
+  .head {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .number {
+    flex: 0 0 auto;
+    line-height: 0.85;
+  }
+
+  .titles {
+    flex: 1;
+    min-width: 0;
+    padding-top: 8px; // оптическое выравнивание с number
+  }
+}

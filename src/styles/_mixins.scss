@@ -1,0 +1,38 @@
+@use "./variables" as *;
+
+@mixin media-up($breakpoint) {
+  @media (min-width: $breakpoint) { @content; }
+}
+
+@mixin container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+// Прячет скроллбар во всех браузерах. Для горизонтальных rail-ов
+// и chip-баров, где сам скроллбар визуально шумит.
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+// Ограничивает текст N строками с многоточием.
+// На последних строках браузер сам ставит '...'.
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+  overflow: hidden;
+}
+
+// Полупрозрачная «стеклянная» поверхность для пилюль/таблеток.
+// Не задаёт сам background — его выбирает caller (разная прозрачность,
+// разная тема). Только blur с webkit-префиксом.
+@mixin glass-blur($amount: 8px) {
+  backdrop-filter: blur($amount);
+  -webkit-backdrop-filter: blur($amount);
+}

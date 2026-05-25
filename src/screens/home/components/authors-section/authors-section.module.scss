@@ -1,0 +1,14 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 32px;
+  }
+}

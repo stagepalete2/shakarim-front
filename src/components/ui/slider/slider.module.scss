@@ -1,0 +1,106 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.root {
+  position: relative;
+}
+
+.track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-block: 4px; // место под лёгкий hover-lift у карточек
+  margin-inline: -4px;
+  padding-inline: 4px;
+  @include hide-scrollbar;
+}
+
+.item {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  width: 160px; // mobile default
+}
+
+@include media-up($breakpoint-md) {
+  .track {
+    gap: 18px;
+  }
+  .item {
+    width: 180px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .track {
+    gap: 22px;
+  }
+  .item {
+    width: 200px;
+  }
+}
+
+// === Variant: одна карточка за раз — items занимают всю ширину контейнера. ===
+// Перебивает фиксированные ширины во всех media-query (специфичность выше).
+.oneAtTime .item {
+  width: 100%;
+}
+
+// === Стрелки управления ===
+// На мобилке скрыты — пользователь свайпает пальцем.
+.arrow {
+  display: none;
+}
+
+@include media-up($breakpoint-md) {
+  .arrow {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: $color-bg;
+    color: $color-text;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    font-size: 22px;
+    line-height: 1;
+    z-index: 5;
+    transition: color 0.15s ease, border-color 0.15s ease,
+      transform 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover,
+    &:focus-visible {
+      color: $color-accent;
+      border-color: $color-accent;
+      box-shadow: 0 6px 18px rgba(10, 102, 194, 0.18);
+      outline: none;
+    }
+  }
+
+  .arrowPrev {
+    left: -14px;
+    &:hover { transform: translateY(-50%) translateX(-2px); }
+  }
+
+  .arrowNext {
+    right: -14px;
+    &:hover { transform: translateY(-50%) translateX(2px); }
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .arrow {
+    width: 44px;
+    height: 44px;
+  }
+  .arrowPrev { left: -22px; }
+  .arrowNext { right: -22px; }
+}

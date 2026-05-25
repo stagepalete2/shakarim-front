@@ -1,0 +1,24 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.block {
+  // Единый ритм между блоками внутри секции.
+}
+
+@include media-up($breakpoint-md) {
+  .stack {
+    gap: 40px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .stack {
+    gap: 48px;
+  }
+}

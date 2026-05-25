@@ -1,0 +1,153 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/shakarimtanu" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $tanu-ink;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  margin: 0;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 16px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid $tanu-line;
+  border-radius: 12px;
+  transition: border-color 0.2s ease, transform 0.2s $ease-out;
+
+  &:hover {
+    border-color: $tanu-line-strong;
+    transform: translateY(-2px);
+  }
+}
+
+.portraitWrap {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: $tanu-paper;
+  border: 2px solid $tanu-line;
+}
+
+.portrait,
+.portraitFallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portraitFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($color-accent, 0.1);
+  color: $color-accent;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.role {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: $tanu-ink;
+}
+
+.years {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: $tanu-faint;
+  font-variant-numeric: tabular-nums;
+}
+
+.bio {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: $tanu-muted;
+}
+
+@include media-up($breakpoint-md) {
+  .title {
+    font-size: 20px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .card {
+    padding: 20px;
+    gap: 18px;
+  }
+
+  .portraitWrap {
+    width: 80px;
+    height: 80px;
+  }
+
+  .name {
+    font-size: 16px;
+  }
+
+  .bio {
+    font-size: 14px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}

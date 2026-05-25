@@ -1,0 +1,91 @@
+// Палитра и фоновые градиенты архива.
+// Используются в карточке (archive-card), hero детальной страницы
+// (archive-item-hero), фильтре и полках — храним в одном месте,
+// чтобы тип-арт оставался консистентным.
+
+// === Доменная палитра ===
+// Тёмная «бумага»/сепия — основной текст архива.
+$archive-ink: #3d2f1f;
+$archive-muted: rgba($archive-ink, 0.6);
+$archive-line: rgba($archive-ink, 0.14);
+
+// Тёплый кремовый фон и более насыщенный «бумажный».
+$archive-bg: #faf6ed;
+$archive-paper: #f5efe0;
+
+// === Градиенты по типу ===
+
+// === Manuscript: линованная пергаментная бумага ===
+$archive-bg-manuscript:
+  repeating-linear-gradient(
+    0deg,
+    transparent 0 13px,
+    rgba(61, 47, 31, 0.06) 13px 14px
+  ),
+  linear-gradient(135deg, #f5e9c8, #ead9b0);
+$archive-icon-manuscript: #6e5530;
+
+// Усиленный вариант для hero (более насыщенный).
+$archive-bg-manuscript-deep:
+  repeating-linear-gradient(
+    0deg,
+    transparent 0 22px,
+    rgba(61, 47, 31, 0.08) 22px 24px
+  ),
+  linear-gradient(135deg, #6e5530, #3d2f1f);
+
+// === Photo: тёмный винтаж ===
+$archive-bg-photo:
+  radial-gradient(circle at 50% 40%, #5a6168, #2a2e33),
+  linear-gradient(180deg, #4a525a, #2a2e33);
+$archive-icon-photo: rgba(255, 255, 255, 0.5);
+
+$archive-bg-photo-deep:
+  radial-gradient(circle at 50% 40%, #5a6168, #2a2e33),
+  linear-gradient(180deg, #4a525a, #1f2226);
+
+// === Letter: пергамент с вертикальной разлиновкой ===
+$archive-bg-letter:
+  repeating-linear-gradient(
+    90deg,
+    transparent 0 12px,
+    rgba(0, 0, 0, 0.025) 12px 13px
+  ),
+  linear-gradient(135deg, #f7efd9, #e6d4a8);
+$archive-icon-letter: #7d5a2c;
+
+$archive-bg-letter-deep:
+  repeating-linear-gradient(
+    90deg,
+    transparent 0 20px,
+    rgba(0, 0, 0, 0.06) 20px 21px
+  ),
+  linear-gradient(135deg, #7d5a2c, #4a3618);
+
+// === Audio: винил ===
+$archive-bg-audio:
+  radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.08) 0 18%,
+    transparent 19%
+  ),
+  radial-gradient(circle at 50% 50%, #2a4d4d, #163030);
+$archive-icon-audio: rgba(255, 255, 255, 0.6);
+
+$archive-bg-audio-deep:
+  radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.06) 0 20%,
+    transparent 21%
+  ),
+  radial-gradient(circle at 50% 50%, #2a4d4d, #0e1f1f);
+
+// === Video: киноплёнка ===
+$archive-bg-video:
+  repeating-linear-gradient(0deg, #1a1a1a 0 6px, #2a2a2a 6px 8px),
+  linear-gradient(180deg, #1f1f1f, #0d0d0d);
+$archive-icon-video: rgba(255, 255, 255, 0.7);
+
+$archive-bg-video-deep:
+  repeating-linear-gradient(0deg, #1a1a1a 0 8px, #2a2a2a 8px 10px),
+  linear-gradient(180deg, #1f1f1f, #0a0a0a);

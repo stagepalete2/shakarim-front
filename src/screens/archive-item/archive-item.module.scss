@@ -1,0 +1,57 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-bottom: 64px;
+}
+
+.bodyWrap {
+  @include container;
+  padding-top: 32px;
+}
+
+.galleryWrap {
+  @include container;
+}
+
+.filesWrap {
+  @include container;
+}
+
+.tabsWrap {
+  @include container;
+}
+
+.relatedWrap {
+  @include container;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+@include media-up($breakpoint-md) {
+  .page {
+    gap: 64px;
+    padding-bottom: 96px;
+  }
+
+  .bodyWrap {
+    padding-top: 56px;
+  }
+
+  .relatedWrap {
+    padding-top: 32px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .page {
+    gap: 80px;
+  }
+
+  .bodyWrap {
+    padding-top: 72px;
+  }
+}

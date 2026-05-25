@@ -1,0 +1,115 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/shakarimtanu" as *;
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $tanu-ink;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  margin: 0;
+}
+
+.card {
+  position: relative;
+  padding: 20px 22px;
+  background: #fff;
+  border: 1px solid $tanu-line;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  // Декоративная sepia-полоска в левом верхнем углу — academic marker.
+  &::before {
+    content: "";
+    position: absolute;
+    left: 22px;
+    top: 0;
+    width: 28px;
+    height: 3px;
+    background: $color-accent;
+  }
+  padding-top: 28px;
+  transition: border-color 0.2s ease, transform 0.2s $ease-out;
+
+  &:hover {
+    border-color: $tanu-line-strong;
+    transform: translateY(-2px);
+  }
+}
+
+.symbol {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: $color-accent;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $tanu-ink;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.desc {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: $tanu-muted;
+}
+
+@include media-up($breakpoint-md) {
+  .title {
+    font-size: 20px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .card {
+    padding: 24px 24px 22px;
+    padding-top: 30px;
+  }
+
+  .cardTitle {
+    font-size: 18px;
+  }
+
+  .desc {
+    font-size: 14px;
+  }
+}

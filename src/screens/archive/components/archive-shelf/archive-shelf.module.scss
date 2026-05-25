@@ -1,0 +1,183 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/archive-types" as *;
+
+.shelf {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+// === Header полки ===
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid $archive-line;
+  // Маленький декоративный «срез» полки справа.
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, $color-accent);
+  }
+}
+
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $archive-ink;
+}
+
+.desc {
+  margin: 0;
+  font-size: 12px;
+  color: $archive-muted;
+  display: none; // на мобилке прячем, чтобы не перегружать
+}
+
+.seeAll {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-accent;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: $radius-pill;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    background: rgba($color-accent, 0.08);
+    border-color: rgba($color-accent, 0.2);
+  }
+
+  span {
+    transition: transform 0.2s ease;
+  }
+
+  &:hover span {
+    transform: translateX(3px);
+  }
+}
+
+// === Mobile: горизонтальная полка с прокруткой ===
+.rail {
+  position: relative;
+}
+
+.list {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 14px;
+  margin: 0;
+  // Без full-bleed: карточки не касаются краёв экрана, выровнены
+  // по контентной области страницы (padding-inline: 16px у .page).
+  padding: 4px 0;
+  overflow-x: auto;
+  list-style: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  @include hide-scrollbar;
+}
+
+.item {
+  // 42% даёт две карточки + заметный peek третьей.
+  flex: 0 0 42%;
+  max-width: 42%;
+  scroll-snap-align: start;
+}
+
+// Лёгкий fade справа — сигнал «ещё есть».
+.fadeRight {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 24px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(250, 246, 237, 0.95)
+  );
+  pointer-events: none;
+}
+
+@include media-up($breakpoint-md) {
+  .title {
+    font-size: 22px;
+  }
+
+  .desc {
+    display: block;
+    font-size: 13px;
+  }
+
+  .seeAll {
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .item {
+    flex: 0 0 24%;
+    max-width: 24%;
+  }
+}
+
+// === Desktop: полка — грид без скролла ===
+@include media-up($breakpoint-lg) {
+  .shelf {
+    gap: 20px;
+  }
+
+  .title {
+    font-size: 26px;
+  }
+
+  .rail {
+    overflow: visible;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px 22px;
+    overflow: visible;
+    padding: 0;
+  }
+
+  .item {
+    flex: initial;
+    max-width: none;
+  }
+
+  .fadeRight {
+    display: none;
+  }
+}
+
+@include media-up($breakpoint-xl) {
+  .list {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

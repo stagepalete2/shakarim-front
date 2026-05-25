@@ -1,0 +1,224 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/archive-types" as *;
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: $archive-ink;
+  // outline:none — есть кастомный focus-visible на .cover.
+  outline: none;
+
+  &:focus-visible .cover {
+    box-shadow:
+      0 0 0 3px rgba($color-accent, 0.35),
+      0 6px 20px -8px rgba(0, 0, 0, 0.18);
+  }
+}
+
+// === Cover area: аспект книги ===
+.cover {
+  position: relative;
+  aspect-ratio: 2 / 3;
+  border-radius: 10px;
+  overflow: hidden;
+  // Лёгкая «бумажная» окантовка снизу — намёк на корешок книги.
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.06),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s $ease-out, box-shadow 0.3s $ease-out;
+}
+
+.card:hover .cover {
+  transform: translateY(-4px) rotate(-0.4deg);
+  box-shadow:
+    0 18px 32px -12px rgba(61, 47, 31, 0.28),
+    0 4px 10px rgba(0, 0, 0, 0.06),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.08);
+}
+
+.coverImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  transition: transform 0.5s $ease-out;
+}
+
+.card:hover .coverImg {
+  transform: scale(1.04);
+}
+
+// Fallback под каждым типом — паттерн + крупная иконка по центру.
+.coverFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.coverIcon {
+  width: 44%;
+  max-width: 80px;
+  aspect-ratio: 1;
+  opacity: 0.35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// === Тип-специфичные обложки (фон фейлбека) ===
+// Градиенты живут в src/styles/_archive-types.scss.
+.type-manuscript .coverFallback { background: $archive-bg-manuscript; }
+.type-manuscript .coverIcon { color: $archive-icon-manuscript; }
+
+.type-photo .coverFallback { background: $archive-bg-photo; }
+.type-photo .coverIcon { color: $archive-icon-photo; }
+
+.type-letter .coverFallback { background: $archive-bg-letter; }
+.type-letter .coverIcon { color: $archive-icon-letter; }
+
+.type-audio .coverFallback { background: $archive-bg-audio; }
+.type-audio .coverIcon { color: $archive-icon-audio; }
+
+.type-video .coverFallback {
+  background: $archive-bg-video;
+  position: relative;
+
+  // Перфорация по краям — намёк на киноплёнку.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 12%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0 6px,
+      rgba(255, 255, 255, 0.12) 6px 10px
+    );
+  }
+
+  &::before { left: 0; }
+  &::after { right: 0; }
+}
+.type-video .coverIcon { color: $archive-icon-video; }
+
+// === Бейдж типа в углу ===
+.badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px 4px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $archive-ink;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: $radius-pill;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  @include glass-blur(6px);
+}
+
+.badgeIcon {
+  display: inline-flex;
+  width: 12px;
+  height: 12px;
+  color: $color-accent;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// Тонкий блик сверху — намёк на свет.
+.coverGloss {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+// === Info: подпись под обложкой ===
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-inline: 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  color: $archive-ink;
+  @include line-clamp(2);
+  transition: color 0.2s ease;
+}
+
+.card:hover .title {
+  color: $color-accent;
+}
+
+.year {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $archive-muted;
+}
+
+@include media-up($breakpoint-md) {
+  .badge {
+    top: 10px;
+    left: 10px;
+    font-size: 11px;
+    padding: 5px 10px 5px 8px;
+  }
+
+  .badgeIcon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .title {
+    font-size: 14px;
+  }
+
+  .year {
+    font-size: 12px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .cover {
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+}

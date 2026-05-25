@@ -1,0 +1,147 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/biography" as *;
+
+.section {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.eyebrow { @include bio-eyebrow; }
+
+.title {
+  margin: 0;
+  @include bio-display(26px, 4.5vw, 40px);
+}
+
+// === Grid ===
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  margin: 0;
+}
+
+// === Card ===
+.card {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 16px;
+  padding: 18px;
+  background: $bio-paper;
+  border: 1px solid $bio-line;
+  border-radius: 14px;
+  transition: transform 0.25s $ease-out, border-color 0.2s ease;
+
+  &:hover {
+    border-color: $bio-line-strong;
+    transform: translateY(-2px);
+  }
+}
+
+.portraitWrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: $bio-bg;
+  border: 2px solid $bio-line;
+}
+
+.portrait,
+.portraitFallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portraitFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $bio-sepia-soft;
+  color: $bio-sepia;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.relation {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $bio-sepia;
+}
+
+.name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  color: $bio-ink;
+}
+
+.bio {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: $bio-muted;
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 48px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+
+  .name {
+    font-size: 17px;
+  }
+
+  .bio {
+    font-size: 14px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
+@include media-up($breakpoint-xl) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

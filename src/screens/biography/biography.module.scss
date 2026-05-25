@@ -1,0 +1,28 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+@use "@/styles/biography" as *;
+
+.page {
+  position: relative;
+  background: $bio-bg;
+  color: $bio-ink;
+  // Ритм страницы — крупные паддинги между секциями. На мобилке скромнее.
+  display: flex;
+  flex-direction: column;
+  gap: $bio-section-gap-mobile;
+  padding-bottom: $bio-section-gap-mobile;
+}
+
+@include media-up($breakpoint-md) {
+  .page {
+    gap: $bio-section-gap-tablet;
+    padding-bottom: $bio-section-gap-tablet;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .page {
+    gap: $bio-section-gap-desktop;
+    padding-bottom: $bio-section-gap-desktop;
+  }
+}

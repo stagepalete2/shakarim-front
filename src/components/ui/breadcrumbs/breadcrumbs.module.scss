@@ -1,0 +1,60 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.root {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.link {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+}
+
+.current {
+  color: #fff;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60ch;
+}
+
+.separator {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+// === Вариант на светлом фоне ===
+// Опционально: добавляешь className="onLight" — крошки станут тёмными.
+:global(.onLight) {
+  .link {
+    color: rgba(17, 17, 17, 0.6);
+    &:hover { color: $color-accent; }
+  }
+  .current { color: $color-text; }
+  .separator { color: rgba(17, 17, 17, 0.3); }
+}

@@ -1,0 +1,62 @@
+// Палитра и токены биографической страницы.
+// Музейная/архивная эстетика — тёплый кремовый фон, сепия-акценты.
+// Используется во всех секциях /biography.
+
+@use "./variables" as *;
+
+// === Палитра ===
+$bio-bg: #faf8f2;          // тёплый кремовый фон страницы
+$bio-paper: #f3ede1;       // более насыщенная «бумага» для блоков
+$bio-ink: #1a1612;         // основной текст (тёплый чёрный)
+$bio-muted: rgba($bio-ink, 0.6);
+$bio-faint: rgba($bio-ink, 0.42);
+$bio-line: rgba($bio-ink, 0.12);
+$bio-line-strong: rgba($bio-ink, 0.22);
+
+// Сепия — историческая патина для citation, года, eyebrow.
+$bio-sepia: #7d5a2c;
+$bio-sepia-soft: rgba($bio-sepia, 0.12);
+
+// === Типографика ===
+// Базовый reading-line — для абзацев и редакционных блоков.
+$bio-reading-max: 680px;
+// Editorial wide column — для split-секций.
+$bio-column-max: 820px;
+
+// === Spacing ===
+// Большие воздушные паддинги между секциями: museum-style ритм.
+$bio-section-gap-mobile: 64px;
+$bio-section-gap-tablet: 96px;
+$bio-section-gap-desktop: 140px;
+
+// === Mixins ===
+
+// «Eyebrow» — мелкий uppercase-label с сепия-цветом.
+@mixin bio-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: $bio-sepia;
+}
+
+// Декоративный разделитель — линия 60px + точка.
+@mixin bio-divider {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: $bio-line-strong;
+  margin: 0;
+  border: none;
+}
+
+// Серифный «editorial»-заголовок. Сейчас используем Manrope с
+// усиленным весом — выглядит editorial без подключения serif-шрифта.
+@mixin bio-display($min, $fluid, $max) {
+  font-size: clamp(#{$min}, #{$fluid}, #{$max});
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: $bio-ink;
+}

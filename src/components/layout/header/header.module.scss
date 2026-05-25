@@ -1,0 +1,79 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: $color-bg;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 0 0 15px 15px;
+}
+
+.inner {
+  @include container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  font-size: 18px; 
+  font-weight: 400;
+}
+
+// Desktop nav скрыт на мобилке, виден на десктопе.
+.desktopNav {
+  display: none;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+// Слот для бургера: виден только до десктопного брейкпоинта.
+.burgerSlot {
+  display: inline-flex;
+}
+
+.mobileMenu {
+  padding: 20px 16px 28px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  background: $color-bg;
+}
+
+.mobileSubNav {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+@include media-up($breakpoint-lg) {
+  .inner {
+    height: 72px;
+  }
+
+  .desktopNav {
+    display: block;
+  }
+
+  .actions {
+    gap: 12px;
+  }
+
+  .burgerSlot {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: none;
+  }
+}
