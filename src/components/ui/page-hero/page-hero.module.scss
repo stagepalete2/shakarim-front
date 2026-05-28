@@ -1,0 +1,192 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+// === Tone-палитры ===
+// CSS-переменные позволяют одной структуре переключать оформление.
+// Каждая страница использует свой tone, добавляя класс на корень.
+
+.tone-museum {
+  --hero-ink: #1a1612;
+  --hero-muted: rgba(26, 22, 18, 0.6);
+  --hero-line: rgba(26, 22, 18, 0.22);
+  --hero-accent: #7d5a2c;
+  --hero-paper: #f3ede1;
+  --hero-shadow: rgba(26, 22, 18, 0.25);
+}
+
+.tone-academic {
+  --hero-ink: #161312;
+  --hero-muted: rgba(22, 19, 18, 0.62);
+  --hero-line: rgba(22, 19, 18, 0.2);
+  --hero-accent: #{$color-accent};
+  --hero-paper: #f3efe7;
+  --hero-shadow: rgba(22, 19, 18, 0.22);
+}
+
+.tone-memorial {
+  --hero-ink: #1a1612;
+  --hero-muted: rgba(26, 22, 18, 0.6);
+  --hero-line: rgba(26, 22, 18, 0.22);
+  --hero-accent: #7d5a2c;
+  --hero-paper: #f3ede1;
+  --hero-shadow: rgba(26, 22, 18, 0.22);
+}
+
+// === Структура ===
+
+.hero {
+  padding-top: 48px;
+  padding-bottom: 16px;
+  color: var(--hero-ink);
+}
+
+.inner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// Breadcrumbs — всегда сверху-слева, на собственной строке.
+// Никогда не участвуют в row-layout-е body (даже когда есть portrait),
+// т.к. они вне .body.
+.breadcrumbs {
+  width: 100%;
+}
+
+// body — текст + опциональный портрет. На мобилке column, на десктопе
+// с portrait → row (split-layout).
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 880px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hero-accent);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--hero-ink);
+}
+
+.lifespan {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--hero-accent);
+}
+
+.lead {
+  margin: 6px 0 0;
+  max-width: 60ch;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--hero-muted);
+}
+
+.divider {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--hero-line);
+  border: none;
+  margin: 8px 0 0;
+}
+
+// === Portrait (только при наличии) ===
+
+.portraitWrap {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 3 / 4;
+  align-self: flex-start;
+}
+
+.portrait {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--hero-paper);
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.04),
+    0 30px 60px -20px var(--hero-shadow);
+}
+
+// Декоративная рамка-смещение под портретом — museum-installation look.
+.portraitFrame {
+  position: absolute;
+  inset: 14px -14px -14px 14px;
+  border: 1px solid var(--hero-line);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@include media-up($breakpoint-md) {
+  .hero {
+    padding-top: 80px;
+    padding-bottom: 24px;
+  }
+
+  .inner {
+    gap: 20px;
+  }
+
+  // Split layout — только когда есть portrait, и только внутри .body.
+  // Breadcrumbs (на .inner уровне) остаются сверху в любом случае.
+  .hero[data-with-portrait] .body {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 64px;
+  }
+
+  .hero[data-with-portrait] .text {
+    flex: 1;
+  }
+
+  .portraitWrap {
+    flex: 0 0 320px;
+    max-width: 320px;
+  }
+
+  .lead {
+    font-size: 18px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .hero {
+    padding-top: 120px;
+  }
+
+  .hero[data-with-portrait] .body {
+    gap: 96px;
+  }
+
+  .portraitWrap {
+    flex: 0 0 380px;
+    max-width: 380px;
+  }
+}
