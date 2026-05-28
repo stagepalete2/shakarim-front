@@ -165,21 +165,41 @@
   right: calc(12px + env(safe-area-inset-right, 0));
 }
 
-// === Caption ===
-.caption {
+// === Footer (caption + optional description) ===
+.footer {
   position: relative;
   z-index: 3;
-  padding: 14px 18px;
-  padding-bottom: calc(14px + env(safe-area-inset-bottom, 0));
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
+  padding: 16px 18px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0));
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
   text-align: center;
   background: linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0.78),
+    rgba(0, 0, 0, 0.4) 60%,
     transparent
   );
+}
+
+.caption {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: #fff;
+  max-width: 56ch;
+}
+
+.description {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 64ch;
 }
 
 // === Hint ===

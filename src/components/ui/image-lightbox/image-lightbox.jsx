@@ -357,8 +357,15 @@ export function ImageLightbox({ items, startIndex = 0, onClose }) {
         </>
       )}
 
-      {current.caption && (
-        <footer className={styles.caption}>{current.caption}</footer>
+      {(current.caption || current.description) && (
+        <footer className={styles.footer}>
+          {current.caption && (
+            <p className={styles.caption}>{current.caption}</p>
+          )}
+          {current.description && (
+            <p className={styles.description}>{current.description}</p>
+          )}
+        </footer>
       )}
 
       <div className={styles.hint} aria-hidden="true">
