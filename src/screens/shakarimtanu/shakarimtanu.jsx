@@ -1,5 +1,5 @@
+import { PageHero } from "@/components/ui/page-hero/page-hero";
 import { SHAKARIMTANU } from "@/lib/shakarimtanu";
-import { ShakarimtanuHero } from "./components/shakarimtanu-hero/shakarimtanu-hero";
 import { ShakarimtanuToc } from "./components/shakarimtanu-toc/shakarimtanu-toc";
 import { ShakarimtanuSection } from "./components/shakarimtanu-section/shakarimtanu-section";
 import styles from "./shakarimtanu.module.scss";
@@ -17,7 +17,14 @@ export function Shakarimtanu({ data = SHAKARIMTANU }) {
 
   return (
     <main className={styles.page}>
-      <ShakarimtanuHero data={data.hero} />
+      <PageHero
+        {...data.hero}
+        breadcrumbs={[
+          { label: "Главная", href: "/" },
+          { label: "Шәкәрімтану" },
+        ]}
+        tone="academic"
+      />
 
       <div className={styles.layout}>
         <aside className={styles.tocCol}>

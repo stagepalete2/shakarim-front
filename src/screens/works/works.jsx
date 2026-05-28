@@ -1,11 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
 import { WORKS, getCategoriesWithCounts } from "@/lib/works";
 import { WorkCard } from "./components/work-card/work-card";
 import { WorksFilter } from "./components/works-filter/works-filter";
 import styles from "./works.module.scss";
+
+const BREADCRUMBS = [
+  { label: "Главная", href: "/" },
+  { label: "Шығармалары" },
+];
 
 export function Works() {
   const [activeCategory, setActiveCategory] = useState(null);
@@ -20,6 +26,7 @@ export function Works() {
   return (
     <main className={styles.page}>
       <div className={styles.head}>
+        <Breadcrumbs items={BREADCRUMBS} className="onLight" />
         <SectionHeader
           title="Шығармалары"
           description="Поэмы, философские труды, переводы, песни и кюи Шакарима Кудайбердиева."

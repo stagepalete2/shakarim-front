@@ -1,0 +1,38 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  background: #fbf9f3; // тёплый кремовый — тон уважительной памяти
+  color: #1a1612;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  padding-bottom: 96px;
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+
+@include media-up($breakpoint-md) {
+  .page {
+    gap: 72px;
+    padding-bottom: 120px;
+  }
+
+  .sections {
+    gap: 88px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .page {
+    gap: 96px;
+  }
+
+  .sections {
+    gap: 112px;
+  }
+}

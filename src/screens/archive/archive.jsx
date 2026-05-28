@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
 import {
   ARCHIVE,
@@ -12,6 +13,11 @@ import { ArchiveFilter } from "./components/archive-filter/archive-filter";
 import { ArchiveShelf } from "./components/archive-shelf/archive-shelf";
 import { ArchiveCard } from "./components/archive-card/archive-card";
 import styles from "./archive.module.scss";
+
+const BREADCRUMBS = [
+  { label: "Главная", href: "/" },
+  { label: "Архив және қолжазба" },
+];
 
 export function Archive() {
   const [activeType, setActiveType] = useState(null);
@@ -26,6 +32,8 @@ export function Archive() {
   return (
     <main className={styles.page}>
       <div className={styles.intro}>
+        <Breadcrumbs items={BREADCRUMBS} className="onLight" />
+
         <SectionHeader
           eyebrow="Архив"
           title="Архив және қолжазба"

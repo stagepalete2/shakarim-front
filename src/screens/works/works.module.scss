@@ -10,7 +10,9 @@
 }
 
 .head {
-  // SectionHeader сам себя выравнивает.
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 // === Mobile: один столбец, фильтр сверху горизонтальными чипами ===

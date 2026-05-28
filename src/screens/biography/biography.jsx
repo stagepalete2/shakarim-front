@@ -1,5 +1,5 @@
+import { PageHero } from "@/components/ui/page-hero/page-hero";
 import { BIO } from "@/lib/biography";
-import { BioHero } from "./components/bio-hero/bio-hero";
 import { BioChronology } from "./components/bio-chronology/bio-chronology";
 import { BioEnvironment } from "./components/bio-environment/bio-environment";
 import { BioFamilyTree } from "./components/bio-family-tree/bio-family-tree";
@@ -15,7 +15,14 @@ import styles from "./biography.module.scss";
 export function Biography({ bio = BIO }) {
   return (
     <main className={styles.page}>
-      <BioHero data={bio.hero} />
+      <PageHero
+        {...bio.hero}
+        breadcrumbs={[
+          { label: "Главная", href: "/" },
+          { label: "Ғұмырнама" },
+        ]}
+        tone="museum"
+      />
       <BioChronology items={bio.chronology} />
       <BioEnvironment data={bio.environment} />
       <BioFamilyTree root={bio.familyTree?.root} />

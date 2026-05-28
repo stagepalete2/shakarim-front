@@ -1,0 +1,79 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+$tagzym-ink: #1a1612;
+$tagzym-muted: rgba($tagzym-ink, 0.6);
+$tagzym-line: rgba($tagzym-ink, 0.12);
+$tagzym-sepia: #7d5a2c;
+
+.section {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $tagzym-line;
+}
+
+.number {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: rgba($tagzym-ink, 0.22);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding-top: 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: $tagzym-ink;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: $tagzym-muted;
+  max-width: 60ch;
+}
+
+// Перебиваем дефолтные max-width в ImageGallery — пускаем грид во всю
+// контентную ширину секции.
+.gallery {
+  width: 100%;
+}
+
+@include media-up($breakpoint-md) {
+  .section {
+    gap: 32px;
+  }
+
+  .subtitle {
+    font-size: 15px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .section {
+    gap: 40px;
+  }
+}
