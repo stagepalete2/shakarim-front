@@ -3,7 +3,7 @@ export const MAIN_NAV = [
   { label: "Шығармалары", href: "/works" },
   { label: "Архив және қолжазба", href: "/archive" },
   { label: "Шәкәрімтану", href: "/shakarimtanu" },
-  { label: "Тағзым", href: "#" },
+  { label: "Тағзым", href: "/tagzym" },
 ];
 
 export const SUB_NAV = [
