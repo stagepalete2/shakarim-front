@@ -1,0 +1,121 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid rgba($color-text, 0.08);
+  border-radius: 14px;
+  transition: border-color 0.2s ease, transform 0.2s $ease-out,
+    box-shadow 0.2s ease;
+
+  &:hover {
+    border-color: rgba($color-accent, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -14px rgba($color-text, 0.18);
+  }
+}
+
+.portraitWrap {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba($color-text, 0.05);
+  border: 2px solid rgba($color-text, 0.08);
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.portrait,
+.portraitFallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portraitFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($color-accent, 0.1);
+  color: $color-accent;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: $color-text;
+}
+
+.years {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba($color-text, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+.role {
+  margin: 4px 0 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.bio {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba($color-text, 0.65);
+  @include line-clamp(3);
+}
+
+@include media-up($breakpoint-md) {
+  .card {
+    padding: 22px;
+    gap: 16px;
+  }
+
+  // На больших экранах — split-layout: портрет слева, текст справа.
+  .card {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .portraitWrap {
+    width: 88px;
+    height: 88px;
+  }
+
+  .body {
+    flex: 1;
+  }
+
+  .name {
+    font-size: 17px;
+  }
+
+  .bio {
+    font-size: 14px;
+  }
+}

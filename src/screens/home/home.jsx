@@ -3,6 +3,7 @@ import { SectionHeader } from "@/components/ui/section-header/section-header"
 import { AuthorsSection } from "./components/authors-section/authors-section"
 import { BooksSection } from "./components/books-section/books-section"
 import { MediaSection } from "./components/media-section/media-section"
+import { NewsSection } from "./components/news-section/news-section"
 import { QuickNavSection } from "./components/quick-nav-section/quick-nav-section"
 import {
   AtomIcon,

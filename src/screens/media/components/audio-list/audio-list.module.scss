@@ -1,0 +1,247 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid rgba($color-text, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+// === Spotify-row ===
+.row {
+  display: grid;
+  grid-template-columns: 44px 48px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba($color-text, 0.06);
+  transition: background 0.15s ease;
+
+  &:last-child { border-bottom: none; }
+
+  &:hover {
+    background: rgba($color-text, 0.03);
+  }
+}
+
+.rowActive {
+  background: rgba($color-accent, 0.06);
+
+  &:hover {
+    background: rgba($color-accent, 0.08);
+  }
+}
+
+// === Play button (с индексом-номером, переходящим в иконку на hover) ===
+.playBtn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: rgba($color-text, 0.7);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background: rgba($color-accent, 0.1);
+    color: $color-accent;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: 2px;
+  }
+}
+
+.index {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba($color-text, 0.4);
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.15s ease;
+}
+
+.playIcon {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.playBtn:hover .index,
+.rowActive .playBtn .index {
+  opacity: 0;
+}
+
+.playBtn:hover .playIcon,
+.rowActive .playBtn .playIcon {
+  opacity: 1;
+}
+
+.rowActive .playBtn {
+  color: $color-accent;
+}
+
+// === Cover ===
+.cover {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #2a4d4d, #163030);
+  flex-shrink: 0;
+}
+
+.coverImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+
+.coverFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 20px;
+  z-index: 1;
+}
+
+// === Body (title + author + optional progress) ===
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-text;
+  letter-spacing: -0.005em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rowActive .title {
+  color: $color-accent;
+}
+
+.author {
+  margin: 0;
+  font-size: 12px;
+  color: rgba($color-text, 0.55);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// === Progress bar ===
+.progress {
+  margin-top: 6px;
+  width: 100%;
+  height: 4px;
+  background: rgba($color-text, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-accent;
+  transition: width 0.1s linear;
+}
+
+// === Duration ===
+.duration {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba($color-text, 0.55);
+  font-variant-numeric: tabular-nums;
+  padding-left: 6px;
+}
+
+// === Now playing description ===
+.nowPlaying {
+  padding: 16px 18px;
+  background: rgba($color-accent, 0.05);
+  border-left: 3px solid $color-accent;
+  border-radius: 0 12px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nowLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.nowDesc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba($color-text, 0.78);
+}
+
+.empty {
+  margin: 0;
+  padding: 48px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba($color-text, 0.55);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+}
+
+@include media-up($breakpoint-md) {
+  .row {
+    grid-template-columns: 48px 56px 1fr auto;
+    gap: 14px;
+    padding: 12px 16px;
+  }
+
+  .cover {
+    width: 56px;
+    height: 56px;
+  }
+
+  .title {
+    font-size: 15px;
+  }
+}

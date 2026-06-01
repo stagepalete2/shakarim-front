@@ -1,0 +1,76 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.bar {
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba($color-text, 0.1);
+  margin-inline: -16px;
+  padding: 0 16px;
+  @include hide-scrollbar;
+}
+
+.tab {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba($color-text, 0.55);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    color: $color-text;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-accent;
+    outline-offset: -4px;
+    border-radius: 4px;
+  }
+}
+
+.tabActive {
+  color: $color-accent;
+  border-bottom-color: $color-accent;
+}
+
+.number {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba($color-text, 0.35);
+  font-variant-numeric: tabular-nums;
+}
+
+.tabActive .number {
+  color: $color-accent;
+  opacity: 0.7;
+}
+
+.label {
+  // ничего
+}
+
+@include media-up($breakpoint-md) {
+  .bar {
+    margin-inline: 0;
+    padding: 0;
+    gap: 6px;
+  }
+
+  .tab {
+    padding: 16px 18px;
+    font-size: 15px;
+  }
+}

@@ -1,4 +1,6 @@
-import styles from "./lang-switcher.module.scss"
+"use client";
+
+import styles from "./lang-switcher.module.scss";
 
 export function LangSwitcher({
   languages,

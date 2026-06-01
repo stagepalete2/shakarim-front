@@ -2,10 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
+import { CategoryFilter } from "@/components/ui/category-filter/category-filter";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
 import { WORKS, getCategoriesWithCounts } from "@/lib/works";
 import { WorkCard } from "./components/work-card/work-card";
-import { WorksFilter } from "./components/works-filter/works-filter";
 import styles from "./works.module.scss";
 
 const BREADCRUMBS = [
@@ -35,11 +35,16 @@ export function Works() {
 
       <div className={styles.layout}>
         <div className={styles.filterCol}>
-          <WorksFilter
-            categories={categories}
-            totalCount={WORKS.length}
-            activeCategory={activeCategory}
+          <CategoryFilter
+            items={categories.map((c) => ({
+              value: c.category,
+              count: c.count,
+            }))}
+            allCount={WORKS.length}
+            activeValue={activeCategory}
             onChange={setActiveCategory}
+            heading="Жанры"
+            ariaLabel="Жанр сүзгісі"
           />
         </div>
 
@@ -49,6 +54,7 @@ export function Works() {
               {filtered.map((work) => (
                 <WorkCard
                   key={work.id}
+                  slug={work.slug}
                   title={work.title}
                   year={work.year}
                   category={work.category}

@@ -1,0 +1,483 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 80px;
+  background: #fafaf7;
+  min-height: 100vh;
+}
+
+// === Hero ===
+.hero {
+  padding-block: 24px 32px;
+  background: #fff;
+  border-bottom: 1px solid rgba($color-text, 0.06);
+}
+
+.heroInner {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.heroBreadcrumbs {
+  width: 100%;
+}
+
+.heroBody {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.portraitWrap {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba($color-text, 0.05);
+  border: 3px solid #fff;
+  box-shadow: 0 10px 30px -10px rgba($color-text, 0.18);
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.portrait,
+.portraitFallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portraitFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($color-accent, 0.12);
+  color: $color-accent;
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: $color-text;
+}
+
+.years {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba($color-text, 0.5);
+  font-variant-numeric: tabular-nums;
+}
+
+.lead {
+  margin: 6px 0 0;
+  max-width: 64ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba($color-text, 0.7);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba($color-text, 0.65);
+  background: rgba($color-text, 0.05);
+  border-radius: $radius-pill;
+}
+
+.divider {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: rgba($color-text, 0.18);
+  border: none;
+  margin: 14px 0 0;
+}
+
+// === Tabs ===
+.tabsWrap {
+  @include container;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.panel {
+  min-height: 200px;
+}
+
+// === Bio panel ===
+.bio {
+  // Prose сам ставит max-width 720px.
+}
+
+.bioLead {
+  max-width: 720px;
+  margin: 0 auto;
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba($color-text, 0.78);
+}
+
+// === Works panel ===
+.worksList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 720px;
+  margin-inline: auto;
+  border-top: 1px solid rgba($color-text, 0.08);
+}
+
+.workRow {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 16px;
+  padding: 16px 4px;
+  border-bottom: 1px solid rgba($color-text, 0.08);
+  align-items: baseline;
+  transition: background 0.18s ease;
+
+  &:hover {
+    background: rgba($color-accent, 0.04);
+  }
+}
+
+.workYear {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: $color-accent;
+  font-variant-numeric: tabular-nums;
+}
+
+.workBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.workTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-text;
+  letter-spacing: -0.005em;
+}
+
+.workType {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba($color-text, 0.5);
+}
+
+// === Quotes panel ===
+.quotesList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+.quoteRow {
+  margin: 0;
+}
+
+.quote {
+  position: relative;
+  margin: 0;
+  padding: 28px 24px 24px;
+  background: #fff;
+  border: 1px solid rgba($color-text, 0.08);
+  border-left: 3px solid $color-accent;
+  border-radius: 0 12px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.quoteMark {
+  position: absolute;
+  top: 4px;
+  left: 14px;
+  font-size: 64px;
+  line-height: 1;
+  color: rgba($color-accent, 0.25);
+  font-family: Georgia, "Times New Roman", serif;
+  pointer-events: none;
+}
+
+.quoteText {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+  font-style: italic;
+  letter-spacing: -0.005em;
+  color: $color-text;
+  position: relative;
+  z-index: 1;
+}
+
+.quoteSource {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $color-accent;
+  font-style: normal;
+}
+
+// === Empty state ===
+.empty {
+  margin: 0;
+  padding: 32px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba($color-text, 0.55);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px dashed rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+// === Related ===
+.related {
+  @include container;
+  padding-top: 24px;
+  border-top: 1px solid rgba($color-text, 0.06);
+}
+
+.relatedHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.relatedTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $color-text;
+}
+
+.relatedAll {
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-accent;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+
+  &:hover { opacity: 0.7; }
+}
+
+.relatedGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.relatedCell {
+  margin: 0;
+}
+
+.relatedCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid rgba($color-text, 0.08);
+  border-radius: 12px;
+  color: $color-text;
+  transition: border-color 0.18s ease, transform 0.18s $ease-out;
+
+  &:hover {
+    border-color: rgba($color-accent, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+.relatedPortraitWrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba($color-text, 0.05);
+  flex-shrink: 0;
+}
+
+.relatedPortrait,
+.relatedPortraitFallback {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.relatedPortraitFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($color-accent, 0.1);
+  color: $color-accent;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.relatedBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.relatedName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: $color-text;
+}
+
+.relatedRole {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: rgba($color-text, 0.55);
+}
+
+// === Tablet ===
+@include media-up($breakpoint-md) {
+  .page {
+    gap: 40px;
+    padding-bottom: 96px;
+  }
+
+  .hero {
+    padding-block: 36px 48px;
+  }
+
+  .heroInner {
+    gap: 28px;
+  }
+
+  .heroBody {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 36px;
+  }
+
+  .portraitWrap {
+    width: 160px;
+    height: 160px;
+    border-width: 4px;
+  }
+
+  .heroText {
+    flex: 1;
+    gap: 12px;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
+  .tabsWrap {
+    gap: 32px;
+  }
+
+  .workRow {
+    grid-template-columns: 90px 1fr;
+    padding: 20px 8px;
+  }
+
+  .workTitle {
+    font-size: 16px;
+  }
+
+  .quoteText {
+    font-size: 20px;
+  }
+
+  .relatedGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .hero {
+    padding-block: 48px 60px;
+  }
+
+  .portraitWrap {
+    width: 200px;
+    height: 200px;
+  }
+
+  .heroText {
+    gap: 14px;
+  }
+
+  .lead {
+    font-size: 17px;
+  }
+
+  .relatedGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

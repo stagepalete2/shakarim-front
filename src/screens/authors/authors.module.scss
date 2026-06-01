@@ -1,0 +1,134 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  @include container;
+  padding-block: 32px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.searchWrap {
+  width: 100%;
+}
+
+.summary {
+  margin: 0;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: rgba($color-text, 0.6);
+
+  strong {
+    font-size: 16px;
+    font-weight: 800;
+    color: $color-text;
+  }
+}
+
+.reset {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-accent;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover { text-decoration: none; }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  margin: 0;
+}
+
+.empty {
+  padding: 48px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 14px;
+  color: rgba($color-text, 0.6);
+}
+
+.emptyReset {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: $color-accent;
+  border: none;
+  border-radius: $radius-pill;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  &:hover { opacity: 0.88; }
+}
+
+@include media-up($breakpoint-md) {
+  .page {
+    padding-block: 48px 120px;
+    gap: 36px;
+  }
+
+  .toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .searchWrap {
+    max-width: 420px;
+    flex: 1;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@include media-up($breakpoint-lg) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}

@@ -1,7 +1,10 @@
+import Link from "next/link";
 import { Image } from "@/components/ui/image/image";
+import { workHref } from "@/lib/works";
 import styles from "./work-card.module.scss";
 
 export function WorkCard({
+  slug,
   title,
   year,
   category,
@@ -11,7 +14,11 @@ export function WorkCard({
   className = "",
 }) {
   return (
-    <article className={`${styles.card} ${className}`}>
+    <Link
+      href={workHref(slug)}
+      className={`${styles.card} ${className}`}
+      aria-label={`${title} — толық ақпарат`}
+    >
       <div className={styles.coverWrap}>
         {cover && (
           <Image
@@ -49,6 +56,6 @@ export function WorkCard({
           )}
         </div>
       </div>
-    </article>
+    </Link>
   );
 }

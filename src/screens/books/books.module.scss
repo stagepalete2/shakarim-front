@@ -1,0 +1,237 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  @include container;
+  padding-block: 32px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+// === Toolbar (поиск + summary) ===
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.searchWrap {
+  width: 100%;
+}
+
+.summary {
+  margin: 0;
+  font-size: 13px;
+  color: rgba($color-text, 0.6);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  strong {
+    font-size: 16px;
+    font-weight: 800;
+    color: $color-text;
+  }
+}
+
+.reset {
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-accent;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover { text-decoration: none; }
+}
+
+// === Layout ===
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.filterCol {
+  min-width: 0;
+}
+
+.contentCol {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+// === Tags bar (под header контентной колонки) ===
+.tagsBar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tagsLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba($color-text, 0.5);
+}
+
+.tagsList {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  margin: 0;
+  padding: 4px 16px;
+  margin-inline: -16px;
+  overflow-x: auto;
+  list-style: none;
+  @include hide-scrollbar;
+}
+
+.tagChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: left;
+  color: $color-text;
+  background: rgba($color-text, 0.04);
+  border: 1px solid transparent;
+  border-radius: $radius-pill;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+
+  &:hover {
+    background: rgba($color-accent, 0.08);
+    color: $color-accent;
+  }
+}
+
+.tagChipActive {
+  color: #fff;
+  background: $color-accent;
+  border-color: $color-accent;
+
+  &:hover {
+    color: #fff;
+    background: $color-accent;
+  }
+}
+
+.tagCount {
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+
+.tagChipActive .tagCount { opacity: 0.85; }
+
+// === Grid ===
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 12px;
+}
+
+.empty {
+  padding: 48px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+  border-radius: 14px;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 14px;
+  color: rgba($color-text, 0.6);
+}
+
+.emptyReset {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: $color-accent;
+  border: none;
+  border-radius: $radius-pill;
+  padding: 8px 18px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+
+  &:hover { opacity: 0.88; }
+}
+
+// === Tablet ===
+@include media-up($breakpoint-md) {
+  .page {
+    padding-block: 48px 96px;
+    gap: 36px;
+  }
+
+  .toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .searchWrap { max-width: 420px; flex: 1; }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px 16px;
+  }
+
+  .tagsList {
+    flex-wrap: wrap;
+    overflow: visible;
+    padding: 0;
+    margin-inline: 0;
+    gap: 8px;
+  }
+}
+
+// === Desktop: master-detail (filter sidebar + content) ===
+@include media-up($breakpoint-lg) {
+  .layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 40px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px 20px;
+  }
+}
+
+@include media-up($breakpoint-xl) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

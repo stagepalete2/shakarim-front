@@ -7,8 +7,8 @@ export const MAIN_NAV = [
 ];
 
 export const SUB_NAV = [
-  { label: "Кітап әлемі ", href: "#" },
-  { label: "Медиа", href: "#" },
-  { label: "Авторлар", href: "#" },
+  { label: "Кітап әлемі ", href: "/books" },
+  { label: "Медиа", href: "/media" },
+  { label: "Авторлар", href: "/authors" },
   { label: "Шәкәрім чат-бот", href: "#" },
 ];

@@ -1,0 +1,66 @@
+@use "@/styles/variables" as *;
+@use "@/styles/mixins" as *;
+
+.page {
+  @include container;
+  padding-block: 32px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  // Тонкая анимация появления при смене таба.
+  animation: panelIn 0.25s $ease-out;
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.panelHead {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.panelNumber {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: rgba($color-text, 0.4);
+  font-variant-numeric: tabular-nums;
+}
+
+.panelTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: $color-text;
+}
+
+@include media-up($breakpoint-md) {
+  .page {
+    padding-block: 48px 120px;
+    gap: 32px;
+  }
+
+  .panel {
+    gap: 28px;
+  }
+
+  .panelTitle {
+    font-size: 22px;
+  }
+}
