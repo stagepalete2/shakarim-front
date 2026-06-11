@@ -12,7 +12,6 @@ const NAV_LINKS = [
   { label: "Лицензия", href: "#" },
   { label: "О проекте", href: "#" },
   { label: "Контактная информация", href: "#" },
-  { label: "Новости", href: "#" },
   { label: "Медиаматериалы", href: "#" },
 ];
 

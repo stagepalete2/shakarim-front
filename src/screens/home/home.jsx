@@ -3,7 +3,6 @@ import { SectionHeader } from "@/components/ui/section-header/section-header"
 import { AuthorsSection } from "./components/authors-section/authors-section"
 import { BooksSection } from "./components/books-section/books-section"
 import { MediaSection } from "./components/media-section/media-section"
-import { NewsSection } from "./components/news-section/news-section"
 import { QuickNavSection } from "./components/quick-nav-section/quick-nav-section"
 import {
   AtomIcon,
@@ -73,57 +72,6 @@ const SHAKARIM_EVENTS = [
     image: "/images/timeline/repression.jpg",
     description:
       "Шакарим был убит во время политических преследований казахской интеллигенции. Его имя на десятилетия оказалось под запретом.",
-  },
-];
-
-const LATEST_NEWS = [
-  {
-    id: 1,
-    title: "Открыт приём документов на 2026/2027 учебный год",
-    author: "Приёмная комиссия",
-    date: "2026-05-15",
-    image: "/images/news/grants.jpg",
-    href: "#",
-  },
-  {
-    id: 2,
-    title: "Шакаримовские чтения 2026: международная конференция в Семее",
-    author: "Научный отдел",
-    date: "2026-05-12",
-    image: "/images/news/grants.jpg",
-    href: "#",
-  },
-  {
-    id: 3,
-    title: "Студенты университета — призёры республиканской олимпиады",
-    author: "Пресс-служба",
-    date: "2026-05-08",
-    image: "/images/news/grants.jpg",
-    href: "#",
-  },
-  {
-    id: 4,
-    title: "Открыт новый корпус Института филологии и истории",
-    author: "Администрация",
-    date: "2026-05-04",
-    image: "/images/news/grants.jpg",
-    href: "#",
-  },
-  {
-    id: 5,
-    title: "Запущена грантовая программа для молодых исследователей",
-    author: "Отдел грантов",
-    date: "2026-04-29",
-    image: "/images/news/grants.jpg",
-    href: "#",
-  },
-  {
-    id: 6,
-    title: "Запущена грантовая программа для молодых исследователей",
-    author: "Отдел грантов",
-    date: "2026-04-29",
-    image: "/images/news/grants.jpg",
-    href: "#",
   },
 ];
 
@@ -416,10 +364,6 @@ export function Home() {
           audios={AUDIO_MATERIALS}
         />
       </section>
-
-      {/* <section className={styles.news}>
-        <NewsSection items={LATEST_NEWS} />
-      </section> */}
     </main>
   );
 }
