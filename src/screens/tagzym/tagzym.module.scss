@@ -2,8 +2,8 @@
 @use "@/styles/mixins" as *;
 
 .page {
-  background: #fbf9f3; // тёплый кремовый — тон уважительной памяти
-  color: #1a1612;
+  background: #ffffff;
+  color: $color-text;
   display: flex;
   flex-direction: column;
   gap: 56px;

@@ -29,7 +29,7 @@ export function Footer() {
       <div className={styles.inner}>
         <div className={styles.logoSlot}>
           <Logo href="/">
-            <img src="/icons/logo2.jpg" alt="" width={60} height={60}/>
+            <img src="/icons/logo.png" alt="" width={60} height={60}/>
             <div className={styles.title}>
               <label htmlFor="">Shakarim</label>
               <label htmlFor="">Kudaiberdiuly</label>

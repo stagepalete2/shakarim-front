@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
-import { CategoryFilter } from "@/components/ui/category-filter/category-filter";
-import { SectionHeader } from "@/components/ui/section-header/section-header";
-import { WORKS, getCategoriesWithCounts } from "@/lib/works";
-import { WorkCard } from "./components/work-card/work-card";
-import styles from "./works.module.scss";
+import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs"
+import { CategoryFilter } from "@/components/ui/category-filter/category-filter"
+import { SectionHeader } from "@/components/ui/section-header/section-header"
+import { WORKS, getCategoriesWithCounts } from "@/lib/works"
+import { useMemo, useState } from "react"
+import { WorkCard } from "./components/work-card/work-card"
+import styles from "./works.module.scss"
 
 const BREADCRUMBS = [
   { label: "Главная", href: "/" },
@@ -29,7 +29,6 @@ export function Works() {
         <Breadcrumbs items={BREADCRUMBS} className="onLight" />
         <SectionHeader
           title="Шығармалары"
-          description="Поэмы, философские труды, переводы, песни и кюи Шакарима Кудайбердиева."
         />
       </div>
 

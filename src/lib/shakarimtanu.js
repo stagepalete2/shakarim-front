@@ -31,7 +31,6 @@ export const SHAKARIMTANU = {
     // === 4.1 Генезис ===
     {
       id: "genesis",
-      number: "4.1",
       title: "Генезис",
       subtitle: "Шәкәрімтану ғылымының негізі",
       lead:
@@ -123,7 +122,6 @@ export const SHAKARIMTANU = {
     // === 4.2 Тарих ===
     {
       id: "history",
-      number: "4.2",
       title: "Тарих",
       subtitle: "Шәкәрім және тарих",
       lead:
@@ -189,7 +187,6 @@ export const SHAKARIMTANU = {
     // === 4.3 Әдебиет ===
     {
       id: "literature",
-      number: "4.3",
       title: "Әдебиет",
       subtitle: "Шәкәрім және әдебиет",
       lead:
@@ -250,7 +247,6 @@ export const SHAKARIMTANU = {
     // === 4.4 Текстология ===
     {
       id: "textology",
-      number: "4.4",
       title: "Текстология",
       subtitle: "Шәкәрім және текстология",
       lead:
@@ -314,7 +310,6 @@ export const SHAKARIMTANU = {
     // === 4.5 Баспасөз ===
     {
       id: "press",
-      number: "4.5",
       title: "Баспасөз",
       subtitle: "Шәкәрім және баспасөз",
       lead:
@@ -358,7 +353,6 @@ export const SHAKARIMTANU = {
     // === 4.6 Ар ілімі ===
     {
       id: "ar-ilimi",
-      number: "4.6",
       title: "Ар ілімі",
       subtitle: "Үш ақиқат туралы ілім",
       lead:
@@ -422,7 +416,6 @@ export const SHAKARIMTANU = {
     // === 4.7 Таным ===
     {
       id: "tanym",
-      number: "4.7",
       title: "Таным",
       subtitle: "Дүниетаным мен философия",
       lead:
@@ -493,7 +486,6 @@ export const SHAKARIMTANU = {
     // === 4.8 Естеліктер ===
     {
       id: "memoirs",
-      number: "4.8",
       title: "Естеліктер",
       subtitle: "Замандастары мен ұрпақтары",
       lead:

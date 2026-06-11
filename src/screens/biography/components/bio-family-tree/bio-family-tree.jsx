@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Image } from "@/components/ui/image/image";
-import styles from "./bio-family-tree.module.scss";
+import { Image } from "@/components/ui/image/image"
+import { useState } from "react"
+import styles from "./bio-family-tree.module.scss"
 
 // Рекурсивный узел дерева. Состояние «развёрнут / свёрнут» хранится
 // локально, чтобы любая ветка могла независимо раскрываться без
@@ -81,15 +81,15 @@ function TreeNode({ node, defaultOpen = false, depth = 0 }) {
 
 export function BioFamilyTree({
   root,
-  eyebrow = "Шежіре",
-  title = "Әулет",
+  eyebrow,
+  title = "Құнанбай әулеті",
 }) {
   if (!root) return null;
 
   return (
     <section className={styles.section} aria-labelledby="bio-tree-title">
       <header className={styles.head}>
-        <span className={styles.eyebrow}>{eyebrow}</span>
+        {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
         <h2 id="bio-tree-title" className={styles.title}>
           {title}
         </h2>

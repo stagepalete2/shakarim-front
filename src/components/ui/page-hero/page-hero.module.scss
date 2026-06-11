@@ -5,31 +5,18 @@
 // CSS-переменные позволяют одной структуре переключать оформление.
 // Каждая страница использует свой tone, добавляя класс на корень.
 
-.tone-museum {
-  --hero-ink: #1a1612;
-  --hero-muted: rgba(26, 22, 18, 0.6);
-  --hero-line: rgba(26, 22, 18, 0.22);
-  --hero-accent: #7d5a2c;
-  --hero-paper: #f3ede1;
-  --hero-shadow: rgba(26, 22, 18, 0.25);
-}
-
-.tone-academic {
-  --hero-ink: #161312;
-  --hero-muted: rgba(22, 19, 18, 0.62);
-  --hero-line: rgba(22, 19, 18, 0.2);
-  --hero-accent: #{$color-accent};
-  --hero-paper: #f3efe7;
-  --hero-shadow: rgba(22, 19, 18, 0.22);
-}
-
+// Все tone-палитры теперь используют общий бирюзовый акцент.
+// Имена сохранены — структура страниц не меняется, отличия по tone
+// можно вернуть в будущем через эти CSS-vars.
+.tone-museum,
+.tone-academic,
 .tone-memorial {
-  --hero-ink: #1a1612;
-  --hero-muted: rgba(26, 22, 18, 0.6);
-  --hero-line: rgba(26, 22, 18, 0.22);
-  --hero-accent: #7d5a2c;
-  --hero-paper: #f3ede1;
-  --hero-shadow: rgba(26, 22, 18, 0.22);
+  --hero-ink: #{$color-text};
+  --hero-muted: rgba(17, 17, 17, 0.6);
+  --hero-line: rgba(17, 17, 17, 0.12);
+  --hero-accent: #{$color-accent};
+  --hero-paper: #f6f7f8;
+  --hero-shadow: rgba(17, 17, 17, 0.18);
 }
 
 // === Структура ===

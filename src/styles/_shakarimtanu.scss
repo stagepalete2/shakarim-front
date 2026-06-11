@@ -5,9 +5,9 @@
 @use "./variables" as *;
 
 // === Палитра ===
-$tanu-bg: #fcfbf8;       // почти белый, лёгкий тёплый оттенок
-$tanu-paper: #f3efe7;
-$tanu-ink: #161312;      // тёплый чёрный
+$tanu-bg: #ffffff;       // белый фон страницы
+$tanu-paper: #f6f7f8;    // лёгкая нейтральная «бумага» для блоков
+$tanu-ink: $color-text;  // стандартный чёрный
 $tanu-muted: rgba($tanu-ink, 0.62);
 $tanu-faint: rgba($tanu-ink, 0.42);
 $tanu-line: rgba($tanu-ink, 0.1);

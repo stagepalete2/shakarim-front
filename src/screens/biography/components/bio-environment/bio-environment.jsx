@@ -3,7 +3,7 @@ import styles from "./bio-environment.module.scss";
 
 export function BioEnvironment({
   data,
-  eyebrow = "Орта мен бастаулар",
+  eyebrow,
   title = "Шәкәрім өскен орта",
 }) {
   if (!data) return null;
@@ -12,7 +12,7 @@ export function BioEnvironment({
   return (
     <section className={styles.section} aria-labelledby="bio-env-title">
       <header className={styles.head}>
-        <span className={styles.eyebrow}>{eyebrow}</span>
+        {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
         <h2 id="bio-env-title" className={styles.title}>
           {title}
         </h2>

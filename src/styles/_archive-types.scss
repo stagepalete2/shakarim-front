@@ -4,14 +4,15 @@
 // чтобы тип-арт оставался консистентным.
 
 // === Доменная палитра ===
-// Тёмная «бумага»/сепия — основной текст архива.
-$archive-ink: #3d2f1f;
+// Нейтральная палитра: белый фон + стандартный тёмный текст.
+// Акцент (тёмная бирюза) уже задан в _variables.scss как $color-accent.
+$archive-ink: #111111;
 $archive-muted: rgba($archive-ink, 0.6);
-$archive-line: rgba($archive-ink, 0.14);
+$archive-line: rgba($archive-ink, 0.1);
 
-// Тёплый кремовый фон и более насыщенный «бумажный».
-$archive-bg: #faf6ed;
-$archive-paper: #f5efe0;
+// Белый фон страницы и чуть-серая «бумага» для блоков.
+$archive-bg: #ffffff;
+$archive-paper: #f6f7f8;
 
 // === Градиенты по типу ===
 

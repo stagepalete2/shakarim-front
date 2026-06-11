@@ -1,20 +1,20 @@
-import { Image } from "@/components/ui/image/image";
-import styles from "./bio-intellectual.module.scss";
+import { Image } from "@/components/ui/image/image"
+import styles from "./bio-intellectual.module.scss"
 
 // Интеллектуальная биография: блок интро + сетка influences-карточек
 // (карта влияний) + лента работ (reading journey). Все блоки опциональны.
 export function BioIntellectual({
   data,
-  eyebrow = "Рухани әлемі",
-  title = "Ой мен ілім жолы",
+  eyebrow,
+  title = "Рухани әлемі",
 }) {
   if (!data) return null;
-  const { intro, influences = [], works = [] } = data;
+  const { intro, influences = [] } = data;
 
   return (
     <section className={styles.section} aria-labelledby="bio-int-title">
       <header className={styles.head}>
-        <span className={styles.eyebrow}>{eyebrow}</span>
+        {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
         <h2 id="bio-int-title" className={styles.title}>
           {title}
         </h2>
@@ -62,20 +62,6 @@ export function BioIntellectual({
         </div>
       )}
 
-      {works.length > 0 && (
-        <div className={styles.works}>
-          <h3 className={styles.subhead}>Шығармалар жолы</h3>
-          <ol className={styles.worksList}>
-            {works.map((w, i) => (
-              <li key={`${w.title}-${i}`} className={styles.workRow}>
-                {w.year && <span className={styles.workYear}>{w.year}</span>}
-                {w.title && <span className={styles.workTitle}>{w.title}</span>}
-                {w.type && <span className={styles.workType}>{w.type}</span>}
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
     </section>
   );
 }

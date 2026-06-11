@@ -7,7 +7,8 @@ $color-accent: #008B8A;
 
 // Manrope покрывает Latin + Cyrillic + Cyrillic Extended —
 // казахские символы (ә ғ қ ң ө ұ ү һ і) и кириллица отображаются.
-$font-sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
 
 $breakpoint-sm: 640px;
 $breakpoint-md: 768px;

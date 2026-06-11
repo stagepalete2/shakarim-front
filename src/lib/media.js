@@ -308,25 +308,21 @@ export const MEDIA = {
 export const MEDIA_TABS = [
   {
     id: "videos",
-    number: "7.1",
     label: "Видео дәрістер",
     longLabel: "Видео дәрістер мен сұхбаттар",
   },
   {
     id: "films",
-    number: "7.2",
     label: "Деректі фильм",
     longLabel: "Деректі фильмдер",
   },
   {
     id: "audio",
-    number: "7.3",
     label: "Әндері",
     longLabel: "Аудио — әндер мен күйлер",
   },
   {
     id: "photos",
-    number: "7.4",
     label: "Фотогалерея",
     longLabel: "Тарихи фотосуреттер",
   },

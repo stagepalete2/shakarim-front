@@ -1,10 +1,10 @@
-import { Image } from "@/components/ui/image/image";
-import styles from "./bio-political.module.scss";
+import { Image } from "@/components/ui/image/image"
+import styles from "./bio-political.module.scss"
 
 export function BioPolitical({
   data,
-  eyebrow = "Қоғамдық қызмет",
-  title = "Саяси және әлеуметтік белсенділік",
+  eyebrow,
+  title = "Қоғамдық қызметы",
 }) {
   if (!data) return null;
   const { intro, events = [], quote } = data;
@@ -12,7 +12,7 @@ export function BioPolitical({
   return (
     <section className={styles.section} aria-labelledby="bio-pol-title">
       <header className={styles.head}>
-        <span className={styles.eyebrow}>{eyebrow}</span>
+        {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
         <h2 id="bio-pol-title" className={styles.title}>
           {title}
         </h2>

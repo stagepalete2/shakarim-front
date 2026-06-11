@@ -25,7 +25,7 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Logo href="/" onClick={closeMenu}>
-          <img src="/icons/logo2.jpg" alt="" width={60} height={60}/>
+          <img src="/icons/logo.png" alt="" width={60} height={60}/>
           <div className={styles.title}>
             <label htmlFor="">Shakarim</label>
             <label htmlFor="">Kudaiberdiuly</label>

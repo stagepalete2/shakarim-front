@@ -20,7 +20,6 @@
 
 export const BIO = {
   hero: {
-    eyebrow: "Ғұмырнама",
     title: "Шәкәрім Құдайбердіұлы",
     lifespan: "1858 — 1931",
     lead:

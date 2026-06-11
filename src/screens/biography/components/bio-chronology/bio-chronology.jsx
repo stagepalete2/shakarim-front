@@ -3,13 +3,13 @@ import styles from "./bio-chronology.module.scss";
 
 // Хронология жизни. На десктопе — alternating cards вдоль вертикальной
 // оси; на мобилке — вертикальная лента с маркерами слева.
-export function BioChronology({ items = [], eyebrow = "Хронология", title = "Өмірбаян сүрлеуі" }) {
+export function BioChronology({ items = [], eyebrow, title = "Өмірбаян сүрлеуі" }) {
   if (items.length === 0) return null;
 
   return (
     <section className={styles.section} aria-labelledby="bio-chronology-title">
       <header className={styles.head}>
-        <span className={styles.eyebrow}>{eyebrow}</span>
+        {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
         <h2 id="bio-chronology-title" className={styles.title}>
           {title}
         </h2>

@@ -3,7 +3,7 @@ import styles from "./bio-descendants.module.scss";
 
 export function BioDescendants({
   items = [],
-  eyebrow = "Әулеттің жалғасы",
+  eyebrow,
   title = "Отбасы, балалар, ұрпақтар",
 }) {
   if (items.length === 0) return null;
@@ -11,7 +11,7 @@ export function BioDescendants({
   return (
     <section className={styles.section} aria-labelledby="bio-desc-title">
       <header className={styles.head}>
-        <span className={styles.eyebrow}>{eyebrow}</span>
+        {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
         <h2 id="bio-desc-title" className={styles.title}>
           {title}
         </h2>

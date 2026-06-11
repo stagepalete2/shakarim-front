@@ -10,7 +10,7 @@ import styles from "./bio-memories.module.scss";
 // arrow и клавиатура — управляют активным индексом.
 export function BioMemories({
   items = [],
-  eyebrow = "Естеліктер",
+  eyebrow,
   title = "Балалық пен ішкі әлем",
 }) {
   const [index, setIndex] = useState(0);
@@ -31,7 +31,7 @@ export function BioMemories({
   return (
     <section className={styles.section} aria-labelledby="bio-mem-title">
       <header className={styles.head}>
-        <span className={styles.eyebrow}>{eyebrow}</span>
+        {eyebrow && <span className={styles.eyebrow}>{eyebrow}</span>}
         <h2 id="bio-mem-title" className={styles.title}>
           {title}
         </h2>

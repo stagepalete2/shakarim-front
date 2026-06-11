@@ -1,21 +1,22 @@
 // Палитра и токены биографической страницы.
-// Музейная/архивная эстетика — тёплый кремовый фон, сепия-акценты.
+// Современный чистый стиль — белый фон + бирюзовый акцент.
 // Используется во всех секциях /biography.
 
 @use "./variables" as *;
 
 // === Палитра ===
-$bio-bg: #faf8f2;          // тёплый кремовый фон страницы
-$bio-paper: #f3ede1;       // более насыщенная «бумага» для блоков
-$bio-ink: #1a1612;         // основной текст (тёплый чёрный)
+$bio-bg: #ffffff;          // белый фон страницы
+$bio-paper: #f6f7f8;       // лёгкая нейтральная «бумага» для блоков
+$bio-ink: $color-text;     // стандартный чёрный
 $bio-muted: rgba($bio-ink, 0.6);
 $bio-faint: rgba($bio-ink, 0.42);
-$bio-line: rgba($bio-ink, 0.12);
-$bio-line-strong: rgba($bio-ink, 0.22);
+$bio-line: rgba($bio-ink, 0.1);
+$bio-line-strong: rgba($bio-ink, 0.18);
 
-// Сепия — историческая патина для citation, года, eyebrow.
-$bio-sepia: #7d5a2c;
-$bio-sepia-soft: rgba($bio-sepia, 0.12);
+// «Сепия» теперь = акцент: бирюзовый. Используется в citation, года,
+// eyebrow. Имя оставлено для обратной совместимости селекторов.
+$bio-sepia: $color-accent;
+$bio-sepia-soft: rgba($color-accent, 0.1);
 
 // === Типографика ===
 // Базовый reading-line — для абзацев и редакционных блоков.
