@@ -1,13 +1,14 @@
 import { PageHero } from "@/components/ui/page-hero/page-hero";
-import { SHAKARIMTANU } from "@/lib/shakarimtanu";
 import { ShakarimtanuToc } from "./components/shakarimtanu-toc/shakarimtanu-toc";
 import { ShakarimtanuSection } from "./components/shakarimtanu-section/shakarimtanu-section";
+import { getT } from "@/lib/i18n/server";
 import styles from "./shakarimtanu.module.scss";
 
 // Композиция страницы. Hero — full-width сверху. Ниже — 2-колоночный
 // layout на десктопе: TOC слева (sticky), секции справа. На мобилке —
 // TOC горизонтальной полосой над контентом.
-export function Shakarimtanu({ data = SHAKARIMTANU }) {
+export async function Shakarimtanu({ data = {} }) {
+  const t = await getT();
   const sections = data.sections ?? [];
   const tocItems = sections.map(({ id, number, title }) => ({
     id,
@@ -20,8 +21,8 @@ export function Shakarimtanu({ data = SHAKARIMTANU }) {
       <PageHero
         {...data.hero}
         breadcrumbs={[
-          { label: "Главная", href: "/" },
-          { label: "Шәкәрімтану" },
+          { label: t("common.home"), href: "/" },
+          { label: t("pages.shakarimtanu") },
         ]}
         tone="academic"
       />

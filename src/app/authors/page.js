@@ -1,4 +1,5 @@
 import { Authors } from "@/screens/authors/authors";
+import { fetchAuthors } from "@/lib/endpoints/authors";
 
 export const metadata = {
   title: "Авторлар — Шәкәрім",
@@ -6,6 +7,7 @@ export const metadata = {
     "Шәкәрім мұрасын зерттеген ғалымдар, оның замандастары мен ұрпақтары — алфавиттік авторлар тізімі.",
 };
 
-export default function AuthorsPage() {
-  return <Authors />;
+export default async function AuthorsPage() {
+  const authors = await fetchAuthors();
+  return <Authors authors={authors} />;
 }

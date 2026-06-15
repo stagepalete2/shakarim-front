@@ -7,17 +7,11 @@ import { Image } from "@/components/ui/image/image";
 import { PdfEmbed } from "@/components/ui/pdf-embed/pdf-embed";
 import { Tabs } from "@/components/ui/tabs/tabs";
 import { workHref } from "@/lib/works";
+import { useTranslations } from "@/components/providers/language-provider";
 import styles from "./work-item.module.scss";
 
-// Табы детальной страницы — две вкладки:
-//  • info    — описание, метаданные, теги, цитата
-//  • content — PDF-просмотрщик (если file задан) или заглушка
-const WORK_TABS = [
-  { id: "info", label: "Сипаттама" },
-  { id: "content", label: "Контент" },
-];
-
 function InfoPanel({ work }) {
+  const t = useTranslations();
   return (
     <div className={styles.info}>
       {work.description && (
@@ -26,17 +20,17 @@ function InfoPanel({ work }) {
 
       <dl className={styles.facts}>
         <div className={styles.fact}>
-          <dt className={styles.factLabel}>Жанры</dt>
+          <dt className={styles.factLabel}>{t("works.genre")}</dt>
           <dd className={styles.factValue}>{work.category}</dd>
         </div>
         {work.year && (
           <div className={styles.fact}>
-            <dt className={styles.factLabel}>Жылы</dt>
+            <dt className={styles.factLabel}>{t("works.year")}</dt>
             <dd className={styles.factValue}>{work.year}</dd>
           </div>
         )}
         <div className={styles.fact}>
-          <dt className={styles.factLabel}>Авторы</dt>
+          <dt className={styles.factLabel}>{t("works.author")}</dt>
           <dd className={styles.factValue}>Шәкәрім Құдайбердіұлы</dd>
         </div>
         {work.file?.size && (
@@ -71,12 +65,11 @@ function InfoPanel({ work }) {
 }
 
 function ContentPanel({ work }) {
+  const t = useTranslations();
   if (!work.file?.url) {
     return (
       <div className={styles.contentEmpty}>
-        <p className={styles.contentEmptyText}>
-          Бұл шығарманың цифрлық нұсқасы әзірге қол жетімсіз.
-        </p>
+        <p className={styles.contentEmptyText}>{t("works.contentEmpty")}</p>
       </div>
     );
   }
@@ -92,14 +85,14 @@ function ContentPanel({ work }) {
           rel="noopener noreferrer"
           className={styles.actionLink}
         >
-          Жаңа қойындыда ашу
+          {t("common.openNewTab")}
         </a>
         <a
           href={work.file.url}
           download
           className={styles.actionLink}
         >
-          Жүктеп алу
+          {t("common.download")}
         </a>
       </div>
     </div>
@@ -107,11 +100,17 @@ function ContentPanel({ work }) {
 }
 
 export function WorkItem({ work, related = [] }) {
-  const [activeTab, setActiveTab] = useState(WORK_TABS[0].id);
+  const t = useTranslations();
+  const [activeTab, setActiveTab] = useState("info");
+
+  const workTabs = [
+    { id: "info", label: t("works.tabInfo") },
+    { id: "content", label: t("works.tabContent") },
+  ];
 
   const breadcrumbs = [
-    { label: "Главная", href: "/" },
-    { label: "Шығармалары", href: "/works" },
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.works"), href: "/works" },
     { label: work.title },
   ];
 
@@ -155,11 +154,11 @@ export function WorkItem({ work, related = [] }) {
       {/* === Tabs + панель === */}
       <div className={styles.tabsWrap}>
         <Tabs
-          tabs={WORK_TABS}
+          tabs={workTabs}
           activeId={activeTab}
           onChange={setActiveTab}
           idPrefix="work"
-          ariaLabel="Шығарма бөлімдері"
+          ariaLabel={t("pages.works")}
         />
 
         <section
@@ -179,10 +178,10 @@ export function WorkItem({ work, related = [] }) {
         <section className={styles.related} aria-labelledby="related-title">
           <header className={styles.relatedHead}>
             <h2 id="related-title" className={styles.relatedTitle}>
-              Ұқсас шығармалар
+              {t("works.related")}
             </h2>
             <Link href="/works" className={styles.relatedAll}>
-              Барлығына →
+              {t("common.seeAll")}
             </Link>
           </header>
 

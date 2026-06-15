@@ -1,14 +1,16 @@
 import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { Image } from "@/components/ui/image/image";
 import { getTypeMeta } from "@/lib/archive";
+import { getT } from "@/lib/i18n/server";
 import styles from "./archive-item-hero.module.scss";
 
-export function ArchiveItemHero({ item }) {
+export async function ArchiveItemHero({ item }) {
+  const t = await getT();
   const meta = getTypeMeta(item.type);
 
   const breadcrumbs = [
-    { label: "Главная", href: "/" },
-    { label: "Архив", href: "/archive" },
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.archive"), href: "/archive" },
     { label: item.title },
   ];
 
@@ -43,7 +45,7 @@ export function ArchiveItemHero({ item }) {
 
           {item.location && (
             <div className={styles.meta}>
-              <span className={styles.metaLabel}>Сақталу орны</span>
+              <span className={styles.metaLabel}>{t("archive.location")}</span>
               <span className={styles.metaValue}>{item.location}</span>
             </div>
           )}

@@ -26,12 +26,13 @@ export function PdfEmbed({ url, title, className = "" }) {
         </div>
       )}
 
+      {/* Без sandbox: встроенный PDF-просмотрщик Chrome (MimeHandlerView)
+          блокируется в sandboxed-iframe, особенно для кросс-доменного файла. */}
       <iframe
         src={src}
         title={title ?? "PDF"}
         className={styles.iframe}
         onLoad={() => setLoaded(true)}
-        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
       />
     </div>
   );

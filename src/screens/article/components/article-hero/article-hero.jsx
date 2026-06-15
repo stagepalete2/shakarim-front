@@ -1,12 +1,14 @@
 import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { Image } from "@/components/ui/image/image";
 import { formatDate } from "@/lib/date";
+import { getT } from "@/lib/i18n/server";
 import styles from "./article-hero.module.scss";
 
-export function ArticleHero({ article }) {
+export async function ArticleHero({ article }) {
+  const t = await getT();
   const breadcrumbs = [
-    { label: "Главная", href: "/" },
-    { label: "Биография", href: "/biography" },
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.biography"), href: "/biography" },
     { label: article.title },
   ];
 

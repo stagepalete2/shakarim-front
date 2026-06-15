@@ -4,19 +4,20 @@ import { BurgerButton } from "@/components/ui/burger-button/burger-button"
 import { LangSwitcher } from "@/components/ui/lang-switcher/lang-switcher"
 import { Logo } from "@/components/ui/logo/logo"
 import { NavList } from "@/components/ui/nav-list/nav-list"
-import { MAIN_NAV, SUB_NAV } from "@/lib/nav"
 import { useState } from "react"
+import { useLanguage } from "@/components/providers/language-provider"
+import { LANG_OPTIONS } from "@/lib/i18n/config"
 import styles from "./header.module.scss"
 
-const LANGUAGES = [
-  { code: "kz", label: "KAZ" },
-  { code: "ru", label: "RUS" },
-  { code: "en", label: "ENG" },
-];
-
-export function Header() {
+// settings — глобальные настройки (см. API.md §10.1).
+export function Header({ settings = {} }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [lang, setLang] = useState("ru");
+  const { lang, setLang } = useLanguage();
+
+  const mainNav = settings.mainNav ?? [];
+  const subNav = settings.subNav ?? [];
+  const logo = settings.logo ?? "/icons/logo.png";
+  const title = settings.siteTitle ?? { line1: "Shakarim", line2: "Kudaiberdiuly" };
 
   const closeMenu = () => setIsMenuOpen(false);
   const withClose = (items) => items.map((link) => ({ ...link, onClick: closeMenu }));
@@ -25,20 +26,20 @@ export function Header() {
     <header className={styles.header}>
       <div className={styles.inner}>
         <Logo href="/" onClick={closeMenu}>
-          <img src="/icons/logo.png" alt="" width={60} height={60}/>
+          <img src={logo} alt="" width={60} height={60}/>
           <div className={styles.title}>
-            <label htmlFor="">Shakarim</label>
-            <label htmlFor="">Kudaiberdiuly</label>
+            <label htmlFor="">{title.line1}</label>
+            <label htmlFor="">{title.line2}</label>
           </div>
         </Logo>
 
         <nav className={styles.desktopNav} aria-label="Основная навигация">
-          <NavList items={MAIN_NAV} direction="horizontal" />
+          <NavList items={mainNav} direction="horizontal" />
         </nav>
 
         <div className={styles.actions}>
           <LangSwitcher
-            languages={LANGUAGES}
+            languages={LANG_OPTIONS}
             value={lang}
             onChange={setLang}
             size="sm"
@@ -56,10 +57,10 @@ export function Header() {
       {isMenuOpen && (
         <div id="mobile-menu" className={styles.mobileMenu}>
           <nav aria-label="Основная навигация">
-            <NavList items={withClose(MAIN_NAV)} direction="vertical" />
+            <NavList items={withClose(mainNav)} direction="vertical" />
           </nav>
           <nav aria-label="Дополнительная навигация" className={styles.mobileSubNav}>
-            <NavList items={withClose(SUB_NAV)} direction="vertical" />
+            <NavList items={withClose(subNav)} direction="vertical" />
           </nav>
         </div>
       )}

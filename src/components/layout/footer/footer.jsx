@@ -8,38 +8,40 @@ import {
   WhatsAppIcon,
 } from "./social-icons"
 
-const NAV_LINKS = [
-  { label: "Лицензия", href: "#" },
-  { label: "О проекте", href: "#" },
-  { label: "Контактная информация", href: "#" },
-  { label: "Медиаматериалы", href: "#" },
-];
+// network → иконка (см. API.md §10.1: socials[].network).
+const SOCIAL_ICONS = {
+  telegram: TelegramIcon,
+  whatsapp: WhatsAppIcon,
+  instagram: InstagramIcon,
+  tiktok: TikTokIcon,
+};
 
-const SOCIAL_LINKS = [
-  { label: "Telegram", href: "#", icon: <TelegramIcon /> },
-  { label: "WhatsApp", href: "#", icon: <WhatsAppIcon /> },
-  { label: "Instagram", href: "#", icon: <InstagramIcon /> },
-  { label: "TikTok", href: "#", icon: <TikTokIcon /> },
-];
+// settings — глобальные настройки (см. API.md §10.1).
+export function Footer({ settings = {} }) {
+  const logo = settings.logo ?? "/icons/logo.png";
+  const title = settings.siteTitle ?? { line1: "Shakarim", line2: "Kudaiberdiuly" };
+  const footer = settings.footer ?? {};
+  const navLinks = footer.navLinks ?? [];
+  const socials = footer.socials ?? [];
+  const copyright = footer.copyright ?? "Университет Шакарим";
 
-export function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.logoSlot}>
           <Logo href="/">
-            <img src="/icons/logo.png" alt="" width={60} height={60}/>
+            <img src={logo} alt="" width={60} height={60}/>
             <div className={styles.title}>
-              <label htmlFor="">Shakarim</label>
-              <label htmlFor="">Kudaiberdiuly</label>
+              <label htmlFor="">{title.line1}</label>
+              <label htmlFor="">{title.line2}</label>
             </div>
           </Logo>
         </div>
 
         <nav className={styles.navSlot} aria-label="Навигация подвала">
           <ul className={styles.navList}>
-            {NAV_LINKS.map((link) => (
-              <li key={link.label} className={styles.navItem}>
+            {navLinks.map((link, i) => (
+              <li key={`${link.href ?? link.label ?? ""}-${i}`} className={styles.navItem}>
                 <Link href={link.href} className={styles.navLink}>
                   {link.label}
                 </Link>
@@ -49,24 +51,28 @@ export function Footer() {
         </nav>
 
         <ul className={styles.socials} aria-label="Социальные сети">
-          {SOCIAL_LINKS.map((s) => (
-            <li key={s.label}>
-              <a
-                href={s.href}
-                className={styles.socialLink}
-                aria-label={s.label}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {s.icon}
-              </a>
-            </li>
-          ))}
+          {socials.map((s) => {
+            const Icon = SOCIAL_ICONS[s.network];
+            if (!Icon) return null;
+            return (
+              <li key={s.network ?? s.label}>
+                <a
+                  href={s.href}
+                  className={styles.socialLink}
+                  aria-label={s.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon />
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
       <div className={styles.bottom}>
-        <p>© {new Date().getFullYear()} Университет Шакарим</p>
+        <p>© {new Date().getFullYear()} {copyright}</p>
       </div>
     </footer>
   );

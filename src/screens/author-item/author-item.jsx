@@ -7,9 +7,11 @@ import { Image } from "@/components/ui/image/image";
 import { Prose } from "@/components/ui/prose/prose";
 import { Tabs } from "@/components/ui/tabs/tabs";
 import { authorHref } from "@/lib/authors";
+import { useTranslations } from "@/components/providers/language-provider";
 import styles from "./author-item.module.scss";
 
 function BioPanel({ author }) {
+  const t = useTranslations();
   // Если fullBio задан (HTML) — Prose; иначе fallback на короткий bio.
   if (author.fullBio) {
     return (
@@ -23,22 +25,17 @@ function BioPanel({ author }) {
       {author.bio ? (
         <p className={styles.bioLead}>{author.bio}</p>
       ) : (
-        <p className={styles.empty}>
-          Бұл автор туралы толық био-мәлімет әзірге қол жетімсіз.
-        </p>
+        <p className={styles.empty}>{t("authors.bioEmpty")}</p>
       )}
     </div>
   );
 }
 
 function WorksPanel({ author }) {
+  const t = useTranslations();
   const works = author.works ?? [];
   if (works.length === 0) {
-    return (
-      <p className={styles.empty}>
-        Бұл автордың Шәкәрімтанудағы еңбектері әзірге қол жетімсіз.
-      </p>
-    );
+    return <p className={styles.empty}>{t("authors.worksEmpty")}</p>;
   }
   return (
     <ol className={styles.worksList}>
@@ -56,13 +53,10 @@ function WorksPanel({ author }) {
 }
 
 function QuotesPanel({ author }) {
+  const t = useTranslations();
   const quotes = author.quotes ?? [];
   if (quotes.length === 0) {
-    return (
-      <p className={styles.empty}>
-        Бұл автордың цитаталары әзірге қол жетімсіз.
-      </p>
-    );
+    return <p className={styles.empty}>{t("authors.quotesEmpty")}</p>;
   }
   return (
     <ul className={styles.quotesList}>
@@ -84,24 +78,25 @@ function QuotesPanel({ author }) {
 }
 
 export function AuthorItem({ author, related = [] }) {
+  const t = useTranslations();
   // Динамически собираем табы — пустые секции (без данных) не показываем.
   const tabs = useMemo(() => {
-    const list = [{ id: "bio", label: "Биография" }];
+    const list = [{ id: "bio", label: t("authors.tabBio") }];
     if (author.works?.length > 0) {
-      list.push({ id: "works", label: "Жұмыстары" });
+      list.push({ id: "works", label: t("authors.tabWorks") });
     }
     if (author.quotes?.length > 0) {
-      list.push({ id: "quotes", label: "Цитаталар" });
+      list.push({ id: "quotes", label: t("authors.tabQuotes") });
     }
     return list;
-  }, [author]);
+  }, [author, t]);
 
   const [activeTab, setActiveTab] = useState("bio");
   const initial = author.name?.[0] ?? "?";
 
   const breadcrumbs = [
-    { label: "Главная", href: "/" },
-    { label: "Авторлар", href: "/authors" },
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.authors"), href: "/authors" },
     { label: author.name },
   ];
 
@@ -159,7 +154,7 @@ export function AuthorItem({ author, related = [] }) {
           activeId={activeTab}
           onChange={setActiveTab}
           idPrefix="author"
-          ariaLabel="Автор бөлімдері"
+          ariaLabel={t("pages.authors")}
         />
 
         <section
@@ -180,10 +175,10 @@ export function AuthorItem({ author, related = [] }) {
         <section className={styles.related} aria-labelledby="related-title">
           <header className={styles.relatedHead}>
             <h2 id="related-title" className={styles.relatedTitle}>
-              Ұқсас авторлар
+              {t("authors.related")}
             </h2>
             <Link href="/authors" className={styles.relatedAll}>
-              Барлығына →
+              {t("common.seeAll")}
             </Link>
           </header>
 

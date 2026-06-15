@@ -1,4 +1,5 @@
 import { Biography } from "@/screens/biography/biography";
+import { fetchBiography } from "@/lib/endpoints/pages";
 
 export const metadata = {
   title: "Ғұмырнама — Шәкәрім Құдайбердіұлы",
@@ -6,6 +7,7 @@ export const metadata = {
     "Жизненный путь Шакарима Кудайбердиева: от рождения в Чингизских горах до посмертной реабилитации.",
 };
 
-export default function BiographyPage() {
-  return <Biography />;
+export default async function BiographyPage() {
+  const bio = await fetchBiography();
+  return <Biography bio={bio} />;
 }

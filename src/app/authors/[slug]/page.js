@@ -1,18 +1,10 @@
 import { notFound } from "next/navigation";
 import { AuthorItem } from "@/screens/author-item/author-item";
-import {
-  AUTHORS,
-  getAuthorBySlug,
-  getRelatedAuthors,
-} from "@/lib/authors";
-
-export function generateStaticParams() {
-  return AUTHORS.map((a) => ({ slug: a.slug }));
-}
+import { fetchAuthor } from "@/lib/endpoints/authors";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const author = getAuthorBySlug(slug);
+  const author = await fetchAuthor(slug);
   if (!author) return { title: "Автор табылмады" };
   return {
     title: `${author.name} — Авторлар`,
@@ -22,9 +14,8 @@ export async function generateMetadata({ params }) {
 
 export default async function AuthorItemPage({ params }) {
   const { slug } = await params;
-  const author = getAuthorBySlug(slug);
+  const author = await fetchAuthor(slug);
   if (!author) notFound();
 
-  const related = getRelatedAuthors(slug, 4);
-  return <AuthorItem author={author} related={related} />;
+  return <AuthorItem author={author} related={author.related ?? []} />;
 }

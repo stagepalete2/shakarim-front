@@ -3,11 +3,11 @@ import { SectionHeader } from "@/components/ui/section-header/section-header";
 import { Slider } from "@/components/ui/slider/slider";
 import styles from "./authors-section.module.scss";
 
-export function AuthorsSection({ items = [], allHref = "#" }) {
+export function AuthorsSection({ items = [], allHref = "#", title = "Наши авторы" }) {
   return (
     <section className={styles.section}>
       <SectionHeader
-        title="Наши авторы"
+        title={title}
         allHref={allHref}
         allLabel="Все авторы →"
       />

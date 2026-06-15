@@ -3,32 +3,32 @@
 import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs"
 import { CategoryFilter } from "@/components/ui/category-filter/category-filter"
 import { SectionHeader } from "@/components/ui/section-header/section-header"
-import { WORKS, getCategoriesWithCounts } from "@/lib/works"
 import { useMemo, useState } from "react"
+import { useTranslations } from "@/components/providers/language-provider"
 import { WorkCard } from "./components/work-card/work-card"
 import styles from "./works.module.scss"
 
-const BREADCRUMBS = [
-  { label: "Главная", href: "/" },
-  { label: "Шығармалары" },
-];
-
-export function Works() {
+// works — массив карточек, categories — [{ category, count }] (с сервера).
+export function Works({ works = [], categories = [] }) {
+  const t = useTranslations();
   const [activeCategory, setActiveCategory] = useState(null);
 
-  const categories = useMemo(() => getCategoriesWithCounts(), []);
+  const breadcrumbs = [
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.works") },
+  ];
 
   const filtered = useMemo(() => {
-    if (!activeCategory) return WORKS;
-    return WORKS.filter((w) => w.category === activeCategory);
-  }, [activeCategory]);
+    if (!activeCategory) return works;
+    return works.filter((w) => w.category === activeCategory);
+  }, [activeCategory, works]);
 
   return (
     <main className={styles.page}>
       <div className={styles.head}>
-        <Breadcrumbs items={BREADCRUMBS} className="onLight" />
+        <Breadcrumbs items={breadcrumbs} className="onLight" />
         <SectionHeader
-          title="Шығармалары"
+          title={t("pages.works")}
         />
       </div>
 
@@ -39,11 +39,12 @@ export function Works() {
               value: c.category,
               count: c.count,
             }))}
-            allCount={WORKS.length}
+            allCount={works.length}
+            allLabel={t("common.all")}
             activeValue={activeCategory}
             onChange={setActiveCategory}
-            heading="Жанры"
-            ariaLabel="Жанр сүзгісі"
+            heading={t("works.filterHeading")}
+            ariaLabel={t("works.filterAria")}
           />
         </div>
 
@@ -63,9 +64,7 @@ export function Works() {
               ))}
             </div>
           ) : (
-            <p className={styles.empty}>
-              По выбранному жанру работ не найдено.
-            </p>
+            <p className={styles.empty}>{t("works.empty")}</p>
           )}
         </div>
       </div>

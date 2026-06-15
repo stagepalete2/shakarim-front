@@ -10,11 +10,12 @@ export function MediaSection({
   audios = [],
   allHref = "#",
   allAudiosHref = "#",
+  title = "Медиаматериалы",
 }) {
   return (
     <section className={styles.section}>
       <SectionHeader
-        title="Медиаматериалы"
+        title={title}
         allHref={allHref}
         allLabel="Все материалы →"
       />

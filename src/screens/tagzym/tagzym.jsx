@@ -1,9 +1,10 @@
 import { PageHero } from "@/components/ui/page-hero/page-hero";
-import { TAGZYM } from "@/lib/tagzym";
 import { TagzymSection } from "./components/tagzym-section/tagzym-section";
+import { getT } from "@/lib/i18n/server";
 import styles from "./tagzym.module.scss";
 
-export function Tagzym({ data = TAGZYM }) {
+export async function Tagzym({ data = {} }) {
+  const t = await getT();
   const sections = data.sections ?? [];
 
   return (
@@ -11,8 +12,8 @@ export function Tagzym({ data = TAGZYM }) {
       <PageHero
         {...data.hero}
         breadcrumbs={[
-          { label: "Главная", href: "/" },
-          { label: "Тағзым" },
+          { label: t("common.home"), href: "/" },
+          { label: t("pages.tagzym") },
         ]}
         tone="memorial"
       />

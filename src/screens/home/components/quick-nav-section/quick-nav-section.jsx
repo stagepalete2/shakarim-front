@@ -5,8 +5,8 @@ export function QuickNavSection({ items = [] }) {
   return (
     <nav className={styles.section} aria-label="Танымал бөлімдер">
       <ul className={styles.grid}>
-        {items.map((item) => (
-          <li key={item.title} className={styles.item}>
+        {items.map((item, i) => (
+          <li key={`${item.href ?? ""}-${i}`} className={styles.item}>
             <QuickNavCard
               title={item.title}
               href={item.href}

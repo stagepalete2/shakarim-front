@@ -3,54 +3,48 @@
 import { useMemo, useState } from "react";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
-import {
-  ARCHIVE,
-  getItemsByType,
-  getTypeMeta,
-  getTypesWithCounts,
-} from "@/lib/archive";
+import { useTranslations } from "@/components/providers/language-provider";
 import { ArchiveFilter } from "./components/archive-filter/archive-filter";
 import { ArchiveShelf } from "./components/archive-shelf/archive-shelf";
 import { ArchiveCard } from "./components/archive-card/archive-card";
 import styles from "./archive.module.scss";
 
-const BREADCRUMBS = [
-  { label: "Главная", href: "/" },
-  { label: "Архив және қолжазба" },
-];
-
-export function Archive() {
+// items — все archive-карточки, types — [{id,label,short,description,count}] (с сервера).
+export function Archive({ items = [], types = [] }) {
+  const t = useTranslations();
   const [activeType, setActiveType] = useState(null);
 
-  const types = useMemo(() => getTypesWithCounts(), []);
+  const breadcrumbs = [
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.archive") },
+  ];
+
+  const itemsByType = (typeId) => items.filter((i) => i.type === typeId);
+  const activeMeta = types.find((t) => t.id === activeType);
 
   const visibleItems = useMemo(() => {
-    if (!activeType) return ARCHIVE;
-    return getItemsByType(activeType);
-  }, [activeType]);
+    if (!activeType) return items;
+    return items.filter((i) => i.type === activeType);
+  }, [items, activeType]);
 
   return (
     <main className={styles.page}>
       <div className={styles.intro}>
-        <Breadcrumbs items={BREADCRUMBS} className="onLight" />
+        <Breadcrumbs items={breadcrumbs} className="onLight" />
 
-        <SectionHeader
-          eyebrow="Архив"
-          title="Архив және қолжазба"
-          description="Шәкәрім Құдайбердіұлының рухани мұрасы: түпнұсқа қолжазбалар, сирек кездесетін фотосуреттер, жеке хаттар, дыбыс және бейне жазбалар бір жерде сақталған."
-        />
+        <SectionHeader title={t("pages.archive")} />
 
         <div className={styles.stats}>
           <div className={styles.stat}>
-            <span className={styles.statNum}>{ARCHIVE.length}</span>
-            <span className={styles.statLabel}>жазба</span>
+            <span className={styles.statNum}>{items.length}</span>
+            <span className={styles.statLabel}>{t("archive.records")}</span>
           </div>
           <span className={styles.statSep} aria-hidden="true">
             ❦
           </span>
           <div className={styles.stat}>
             <span className={styles.statNum}>{types.length}</span>
-            <span className={styles.statLabel}>топ</span>
+            <span className={styles.statLabel}>{t("archive.groups")}</span>
           </div>
         </div>
       </div>
@@ -58,7 +52,7 @@ export function Archive() {
       <div className={styles.filterWrap}>
         <ArchiveFilter
           types={types}
-          totalCount={ARCHIVE.length}
+          totalCount={items.length}
           activeType={activeType}
           onChange={setActiveType}
         />
@@ -70,7 +64,7 @@ export function Archive() {
             <ArchiveShelf
               key={type.id}
               type={type}
-              items={getItemsByType(type.id)}
+              items={itemsByType(type.id)}
               onSeeAll={() => setActiveType(type.id)}
             />
           ))}
@@ -78,12 +72,8 @@ export function Archive() {
       ) : (
         <section className={styles.results} aria-live="polite">
           <header className={styles.resultsHead}>
-            <h3 className={styles.resultsTitle}>
-              {getTypeMeta(activeType)?.label}
-            </h3>
-            <p className={styles.resultsDesc}>
-              {getTypeMeta(activeType)?.description}
-            </p>
+            <h3 className={styles.resultsTitle}>{activeMeta?.label}</h3>
+            <p className={styles.resultsDesc}>{activeMeta?.description}</p>
           </header>
 
           {visibleItems.length > 0 ? (
@@ -93,7 +83,7 @@ export function Archive() {
               ))}
             </div>
           ) : (
-            <p className={styles.empty}>Бұл топ бойынша жазба табылмады.</p>
+            <p className={styles.empty}>{t("archive.empty")}</p>
           )}
         </section>
       )}

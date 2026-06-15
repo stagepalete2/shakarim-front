@@ -5,31 +5,27 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { ImageGallery } from "@/components/ui/image-gallery/image-gallery";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
 import { Tabs } from "@/components/ui/tabs/tabs";
-import { MEDIA, MEDIA_TABS } from "@/lib/media";
+import { MEDIA_TABS } from "@/lib/media";
+import { useTranslations } from "@/components/providers/language-provider";
 import { AudioList } from "./components/audio-list/audio-list";
 import { VideoGrid } from "./components/video-grid/video-grid";
 import styles from "./media.module.scss";
 
-const BREADCRUMBS = [
-  { label: "Главная", href: "/" },
-  { label: "Медиа" },
-];
-
 // Рендер активной секции по типу таба.
-function ActivePanel({ tabId }) {
+function ActivePanel({ tabId, media }) {
   switch (tabId) {
     case "videos":
-      return <VideoGrid items={MEDIA.videos} />;
+      return <VideoGrid items={media.videos ?? []} />;
     case "films":
-      return <VideoGrid items={MEDIA.films} />;
+      return <VideoGrid items={media.films ?? []} />;
     case "audio":
-      return <AudioList items={MEDIA.audio} />;
+      return <AudioList items={media.audio ?? []} />;
     case "photos":
       // Instagram-стиль: квадратные миниатюры с подписями + lightbox.
       // ImageGallery умеет читать `description` в lightbox-подвале.
       return (
         <ImageGallery
-          items={MEDIA.photos.map((p) => ({
+          items={(media.photos ?? []).map((p) => ({
             src: p.src,
             caption: p.title,
             description: [p.year, p.author, p.description]
@@ -46,18 +42,22 @@ function ActivePanel({ tabId }) {
   }
 }
 
-export function Media() {
+// media — { videos, films, audio, photos } (с сервера).
+export function Media({ media = {} }) {
+  const t = useTranslations();
   const [activeTab, setActiveTab] = useState(MEDIA_TABS[0]?.id ?? "videos");
-  const activeMeta = MEDIA_TABS.find((t) => t.id === activeTab);
+  const activeMeta = MEDIA_TABS.find((tab) => tab.id === activeTab);
+
+  const breadcrumbs = [
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.media") },
+  ];
 
   return (
     <main className={styles.page}>
       <div className={styles.head}>
-        <Breadcrumbs items={BREADCRUMBS} className="onLight" />
-        <SectionHeader
-          title="Медиа"
-          description="Шәкәрім туралы видео дәрістер, деректі фильмдер, оның әндері және тарихи фотосуреттер."
-        />
+        <Breadcrumbs items={breadcrumbs} className="onLight" />
+        <SectionHeader title={t("pages.media")} />
       </div>
 
       <Tabs
@@ -84,7 +84,7 @@ export function Media() {
           </header>
         )}
 
-        <ActivePanel tabId={activeTab} />
+        <ActivePanel tabId={activeTab} media={media} />
       </section>
     </main>
   );

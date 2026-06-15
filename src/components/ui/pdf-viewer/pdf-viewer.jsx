@@ -93,12 +93,12 @@ export function PdfViewer({ file, onClose }) {
             </div>
           )}
 
+          {/* Без sandbox: PDF-просмотрщик Chrome не рендерится в sandboxed-iframe. */}
           <iframe
             src={src}
             title={file.name}
             className={styles.iframe}
             onLoad={() => setLoaded(true)}
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
           />
         </div>
       </div>

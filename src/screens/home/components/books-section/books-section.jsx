@@ -3,11 +3,11 @@ import { SectionHeader } from "@/components/ui/section-header/section-header";
 import { Slider } from "@/components/ui/slider/slider";
 import styles from "./books-section.module.scss";
 
-export function BooksSection({ items = [], allHref = "#" }) {
+export function BooksSection({ items = [], allHref = "#", title = "Библиотека" }) {
   return (
     <section className={styles.section}>
       <SectionHeader
-        title="Библиотека"
+        title={title}
         allHref={allHref}
         allLabel="Все книги →"
       />

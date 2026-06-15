@@ -1,14 +1,16 @@
 import { ArticleCard } from "@/components/ui/article-card/article-card";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
 import { articleHref } from "@/lib/articles";
+import { getT } from "@/lib/i18n/server";
 import styles from "./related-articles.module.scss";
 
-export function RelatedArticles({ items = [] }) {
+export async function RelatedArticles({ items = [] }) {
   if (items.length === 0) return null;
+  const t = await getT();
 
   return (
     <section className={styles.section}>
-      <SectionHeader title="Похожие статьи" />
+      <SectionHeader title={t("article.related")} />
       <div className={styles.grid}>
         {items.map((article) => (
           <ArticleCard

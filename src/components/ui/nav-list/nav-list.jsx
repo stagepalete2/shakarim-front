@@ -12,8 +12,8 @@ export function NavList({
       className={`${styles.list} ${styles[direction]} ${className}`}
       {...rest}
     >
-      {items.map((item) => (
-        <li key={item.label} className={styles.item}>
+      {items.map((item, i) => (
+        <li key={item.href ?? item.label ?? i} className={styles.item}>
           <NavLink href={item.href} onClick={item.onClick}>
             {item.label}
           </NavLink>

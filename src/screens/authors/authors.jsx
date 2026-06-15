@@ -4,37 +4,37 @@ import { useMemo, useState } from "react";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { SearchInput } from "@/components/ui/search-input/search-input";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
-import { AUTHORS, searchAuthors } from "@/lib/authors";
+import { searchAuthors } from "@/lib/authors";
+import { useTranslations } from "@/components/providers/language-provider";
 import { AuthorCard } from "./components/author-card/author-card";
 import styles from "./authors.module.scss";
-
-const BREADCRUMBS = [
-  { label: "Главная", href: "/" },
-  { label: "Авторлар" },
-];
 
 // kk-локаль сортировка по имени.
 const collator = new Intl.Collator("kk", { sensitivity: "base" });
 
-export function Authors() {
+// authors — массив авторов (с сервера).
+export function Authors({ authors = [] }) {
+  const t = useTranslations();
   const [query, setQuery] = useState("");
 
+  const breadcrumbs = [
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.authors") },
+  ];
+
   const filtered = useMemo(() => {
-    return [...searchAuthors(AUTHORS, query)].sort((a, b) =>
+    return [...searchAuthors(authors, query)].sort((a, b) =>
       collator.compare(a.name, b.name),
     );
-  }, [query]);
+  }, [authors, query]);
 
   const hasQuery = query.trim().length > 0;
 
   return (
     <main className={styles.page}>
       <div className={styles.head}>
-        <Breadcrumbs items={BREADCRUMBS} className="onLight" />
-        <SectionHeader
-          title="Авторлар"
-          description="Шәкәрім мұрасын зерттеген ғалымдар, оның замандастары мен ұрпақтары — алфавиттік тізім."
-        />
+        <Breadcrumbs items={breadcrumbs} className="onLight" />
+        <SectionHeader title={t("pages.authors")} />
       </div>
 
       <div className={styles.toolbar}>
@@ -42,19 +42,19 @@ export function Authors() {
           <SearchInput
             value={query}
             onChange={setQuery}
-            placeholder="Аты бойынша іздеу..."
+            placeholder={t("authors.searchPlaceholder")}
             size="md"
           />
         </div>
         <p className={styles.summary} aria-live="polite">
-          <strong>{filtered.length}</strong> автор
+          <strong>{filtered.length}</strong> {t("authors.countLabel")}
           {hasQuery && (
             <button
               type="button"
               className={styles.reset}
               onClick={() => setQuery("")}
             >
-              Тазалау
+              {t("common.clear")}
             </button>
           )}
         </p>
@@ -71,14 +71,14 @@ export function Authors() {
       ) : (
         <div className={styles.empty}>
           <p className={styles.emptyText}>
-            «{query}» бойынша автор табылмады.
+            «{query}» {t("authors.emptyText")}
           </p>
           <button
             type="button"
             className={styles.emptyReset}
             onClick={() => setQuery("")}
           >
-            Іздеуді тазалау
+            {t("authors.emptyReset")}
           </button>
         </div>
       )}

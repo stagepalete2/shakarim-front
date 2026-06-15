@@ -1,18 +1,10 @@
 import { notFound } from "next/navigation";
 import { ArchiveItem } from "@/screens/archive-item/archive-item";
-import {
-  ARCHIVE,
-  getArchiveBySlug,
-  getRelatedArchive,
-} from "@/lib/archive";
-
-export function generateStaticParams() {
-  return ARCHIVE.map((i) => ({ slug: i.slug }));
-}
+import { fetchArchiveItem } from "@/lib/endpoints/archive";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const item = getArchiveBySlug(slug);
+  const item = await fetchArchiveItem(slug);
   if (!item) return { title: "Архив элементі табылмады" };
   return {
     title: `${item.title} — Шәкәрім архиві`,
@@ -22,10 +14,8 @@ export async function generateMetadata({ params }) {
 
 export default async function ArchiveItemPage({ params }) {
   const { slug } = await params;
-  const item = getArchiveBySlug(slug);
+  const item = await fetchArchiveItem(slug);
   if (!item) notFound();
 
-  const related = getRelatedArchive(slug, 3);
-
-  return <ArchiveItem item={item} related={related} />;
+  return <ArchiveItem item={item} related={item.related ?? []} />;
 }

@@ -4,6 +4,7 @@ import { ArchiveItemHero } from "./components/archive-item-hero/archive-item-her
 import { ArchiveItemBody } from "./components/archive-item-body/archive-item-body";
 import { ArchiveTabs } from "./components/archive-tabs/archive-tabs";
 import { RelatedArchive } from "./components/related-archive/related-archive";
+import { getT } from "@/lib/i18n/server";
 import styles from "./archive-item.module.scss";
 
 // Порядок секций:
@@ -14,7 +15,8 @@ import styles from "./archive-item.module.scss";
 //  5. Tabs   — текстовые «прочтения»: Сипаттама / Транскрипт / Аударма
 //             / Тарихи мәнмәтін и т.п. (категории приходят с бэкенда)
 //  6. Related
-export function ArchiveItem({ item, related = [] }) {
+export async function ArchiveItem({ item, related = [] }) {
+  const t = await getT();
   const gallery = item.gallery ?? [];
   const files = item.files ?? [];
   const tabs = item.tabs ?? [];
@@ -31,7 +33,7 @@ export function ArchiveItem({ item, related = [] }) {
         <div className={styles.galleryWrap}>
           <ImageGallery
             items={gallery}
-            title="Сканер беттері"
+            title={t("archive.scansTitle")}
             aspectRatio="1 / 1"
             showHoverHint
           />
@@ -40,7 +42,7 @@ export function ArchiveItem({ item, related = [] }) {
 
       {files.length > 0 && (
         <div className={styles.filesWrap}>
-          <FileList items={files} title="Файлдар" />
+          <FileList items={files} title={t("archive.filesTitle")} />
         </div>
       )}
 

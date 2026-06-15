@@ -7,14 +7,11 @@ import { Image } from "@/components/ui/image/image";
 import { PdfEmbed } from "@/components/ui/pdf-embed/pdf-embed";
 import { Tabs } from "@/components/ui/tabs/tabs";
 import { bookHref } from "@/lib/books";
+import { useTranslations } from "@/components/providers/language-provider";
 import styles from "./book-item.module.scss";
 
-const BOOK_TABS = [
-  { id: "info", label: "Сипаттама" },
-  { id: "content", label: "Контент" },
-];
-
 function InfoPanel({ book }) {
+  const t = useTranslations();
   return (
     <div className={styles.info}>
       {book.description && (
@@ -24,19 +21,19 @@ function InfoPanel({ book }) {
       <dl className={styles.facts}>
         {book.author && (
           <div className={styles.fact}>
-            <dt className={styles.factLabel}>Авторы</dt>
+            <dt className={styles.factLabel}>{t("works.author")}</dt>
             <dd className={styles.factValue}>{book.author}</dd>
           </div>
         )}
         {book.year && (
           <div className={styles.fact}>
-            <dt className={styles.factLabel}>Жылы</dt>
+            <dt className={styles.factLabel}>{t("works.year")}</dt>
             <dd className={styles.factValue}>{book.year}</dd>
           </div>
         )}
         {book.category && (
           <div className={styles.fact}>
-            <dt className={styles.factLabel}>Категория</dt>
+            <dt className={styles.factLabel}>{t("books.categoryHeading")}</dt>
             <dd className={styles.factValue}>{book.category}</dd>
           </div>
         )}
@@ -65,12 +62,11 @@ function InfoPanel({ book }) {
 }
 
 function ContentPanel({ book }) {
+  const t = useTranslations();
   if (!book.file?.url) {
     return (
       <div className={styles.contentEmpty}>
-        <p className={styles.contentEmptyText}>
-          Бұл кітаптың цифрлық нұсқасы әзірге қол жетімсіз.
-        </p>
+        <p className={styles.contentEmptyText}>{t("books.contentEmpty")}</p>
       </div>
     );
   }
@@ -86,14 +82,14 @@ function ContentPanel({ book }) {
           rel="noopener noreferrer"
           className={styles.actionLink}
         >
-          Жаңа қойындыда ашу
+          {t("common.openNewTab")}
         </a>
         <a
           href={book.file.url}
           download
           className={styles.actionLink}
         >
-          Жүктеп алу
+          {t("common.download")}
         </a>
       </div>
     </div>
@@ -101,11 +97,17 @@ function ContentPanel({ book }) {
 }
 
 export function BookItem({ book, related = [] }) {
-  const [activeTab, setActiveTab] = useState(BOOK_TABS[0].id);
+  const t = useTranslations();
+  const [activeTab, setActiveTab] = useState("info");
+
+  const bookTabs = [
+    { id: "info", label: t("works.tabInfo") },
+    { id: "content", label: t("works.tabContent") },
+  ];
 
   const breadcrumbs = [
-    { label: "Главная", href: "/" },
-    { label: "Кітап әлемі", href: "/books" },
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.books"), href: "/books" },
     { label: book.title },
   ];
 
@@ -159,11 +161,11 @@ export function BookItem({ book, related = [] }) {
       {/* === Tabs + панель === */}
       <div className={styles.tabsWrap}>
         <Tabs
-          tabs={BOOK_TABS}
+          tabs={bookTabs}
           activeId={activeTab}
           onChange={setActiveTab}
           idPrefix="book"
-          ariaLabel="Кітап бөлімдері"
+          ariaLabel={t("pages.books")}
         />
 
         <section
@@ -183,10 +185,10 @@ export function BookItem({ book, related = [] }) {
         <section className={styles.related} aria-labelledby="related-title">
           <header className={styles.relatedHead}>
             <h2 id="related-title" className={styles.relatedTitle}>
-              Ұқсас кітаптар
+              {t("books.related")}
             </h2>
             <Link href="/books" className={styles.relatedAll}>
-              Барлығына →
+              {t("common.seeAll")}
             </Link>
           </header>
 

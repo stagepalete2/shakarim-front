@@ -5,34 +5,29 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { CategoryFilter } from "@/components/ui/category-filter/category-filter";
 import { SearchInput } from "@/components/ui/search-input/search-input";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
-import {
-  BOOKS,
-  getAllTags,
-  getCategoriesWithCounts,
-  searchBooks,
-} from "@/lib/books";
+import { searchBooks } from "@/lib/books";
+import { useTranslations } from "@/components/providers/language-provider";
 import { BookCard } from "./components/book-card/book-card";
 import styles from "./books.module.scss";
-
-const BREADCRUMBS = [
-  { label: "Главная", href: "/" },
-  { label: "Кітап әлемі" },
-];
 
 // Алфавитная сортировка с учётом kk/ru локали.
 const collator = new Intl.Collator("kk", { sensitivity: "base" });
 
-export function Books() {
+// books — массив карточек, categories — [{category,count}], tags — [{tag,count}] (с сервера).
+export function Books({ books = [], categories = [], tags = [] }) {
+  const t = useTranslations();
   const [query, setQuery] = useState("");
+
+  const breadcrumbs = [
+    { label: t("common.home"), href: "/" },
+    { label: t("pages.books") },
+  ];
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
 
-  const categories = useMemo(() => getCategoriesWithCounts(), []);
-  const allTags = useMemo(() => getAllTags(), []);
-
   // Пайплайн: category → tag → search → sort.
   const filtered = useMemo(() => {
-    let list = BOOKS;
+    let list = books;
     if (activeCategory) {
       list = list.filter((b) => b.category === activeCategory);
     }
@@ -41,7 +36,7 @@ export function Books() {
     }
     list = searchBooks(list, query);
     return [...list].sort((a, b) => collator.compare(a.title, b.title));
-  }, [activeCategory, activeTag, query]);
+  }, [books, activeCategory, activeTag, query]);
 
   const hasActiveFilters = Boolean(activeCategory || activeTag || query);
   const resetAll = () => {
@@ -53,11 +48,8 @@ export function Books() {
   return (
     <main className={styles.page}>
       <div className={styles.head}>
-        <Breadcrumbs items={BREADCRUMBS} className="onLight" />
-        <SectionHeader
-          title="Кітап әлемі"
-          description="Шәкәрім Құдайбердіұлының кітаптары мен оған арналған ғылыми зерттеу еңбектерінің электронды каталогы. Әр кітапты тікелей сайтта оқып, PDF нұсқасын жүктеп ала аласыз."
-        />
+        <Breadcrumbs items={breadcrumbs} className="onLight" />
+        <SectionHeader title={t("pages.books")} />
       </div>
 
       <div className={styles.toolbar}>
@@ -65,22 +57,20 @@ export function Books() {
           <SearchInput
             value={query}
             onChange={setQuery}
-            placeholder="Іздеу: тақырып, автор, тег..."
+            placeholder={t("books.searchPlaceholder")}
             size="md"
           />
         </div>
         <p className={styles.summary} aria-live="polite">
           <strong>{filtered.length}</strong>{" "}
-          <span>
-            {filtered.length === 1 ? "кітап табылды" : "кітап табылды"}
-          </span>
+          <span>{t("books.countLabel")}</span>
           {hasActiveFilters && (
             <button
               type="button"
               className={styles.reset}
               onClick={resetAll}
             >
-              Тазалау
+              {t("common.clear")}
             </button>
           )}
         </p>
@@ -93,18 +83,19 @@ export function Books() {
               value: c.category,
               count: c.count,
             }))}
-            allCount={BOOKS.length}
+            allCount={books.length}
+            allLabel={t("common.all")}
             activeValue={activeCategory}
             onChange={setActiveCategory}
-            heading="Категория"
-            ariaLabel="Категория сүзгісі"
+            heading={t("books.categoryHeading")}
+            ariaLabel={t("books.categoryAria")}
           />
         </aside>
 
         <div className={styles.contentCol}>
-          {allTags.length > 0 && (
-            <div className={styles.tagsBar} aria-label="Тег сүзгісі">
-              <span className={styles.tagsLabel}>Тегтер:</span>
+          {tags.length > 0 && (
+            <div className={styles.tagsBar} aria-label={t("books.tagsLabel")}>
+              <span className={styles.tagsLabel}>{t("books.tagsLabel")}</span>
               <ul className={styles.tagsList}>
                 <li>
                   <button
@@ -113,10 +104,10 @@ export function Books() {
                     onClick={() => setActiveTag(null)}
                     aria-pressed={!activeTag}
                   >
-                    Барлығы
+                    {t("common.all")}
                   </button>
                 </li>
-                {allTags.map(({ tag, count }) => {
+                {tags.map(({ tag, count }) => {
                   const isActive = activeTag === tag;
                   return (
                     <li key={tag}>
@@ -146,16 +137,14 @@ export function Books() {
             </div>
           ) : (
             <div className={styles.empty}>
-              <p className={styles.emptyText}>
-                Сұрауыңыз бойынша кітап табылмады.
-              </p>
+              <p className={styles.emptyText}>{t("books.emptyTitle")}</p>
               {hasActiveFilters && (
                 <button
                   type="button"
                   className={styles.emptyReset}
                   onClick={resetAll}
                 >
-                  Барлық сүзгілерді тазалау
+                  {t("books.emptyReset")}
                 </button>
               )}
             </div>

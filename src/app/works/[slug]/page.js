@@ -1,14 +1,10 @@
 import { notFound } from "next/navigation";
 import { WorkItem } from "@/screens/work-item/work-item";
-import { WORKS, getRelatedWorks, getWorkBySlug } from "@/lib/works";
-
-export function generateStaticParams() {
-  return WORKS.map((w) => ({ slug: w.slug }));
-}
+import { fetchWork } from "@/lib/endpoints/works";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const work = getWorkBySlug(slug);
+  const work = await fetchWork(slug);
   if (!work) return { title: "Шығарма табылмады" };
   return {
     title: `${work.title} — Шәкәрім шығармалары`,
@@ -18,9 +14,9 @@ export async function generateMetadata({ params }) {
 
 export default async function WorkItemPage({ params }) {
   const { slug } = await params;
-  const work = getWorkBySlug(slug);
+  const work = await fetchWork(slug);
   if (!work) notFound();
 
-  const related = getRelatedWorks(slug, 4);
-  return <WorkItem work={work} related={related} />;
+  // related приходит внутри детали (API.md §1).
+  return <WorkItem work={work} related={work.related ?? []} />;
 }
