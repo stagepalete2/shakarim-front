@@ -131,44 +131,46 @@
     height: 18px;
   }
 
-  // Стек: только год виден всегда; label — поповер по клику.
+  // На оси видна только иконка-бабл. Год и подпись — карточкой по наведению
+  // или клику (иначе годы соседних событий налезают друг на друга).
   .tooltip {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.75);
-    overflow: visible;
-    pointer-events: none;
-  }
-
-  .tooltipYear {
-    order: 2; // year всегда ближе к линии
-    color: #fff;
-  }
-
-  .tooltipLabel {
-    order: 1; // label дальше от линии
-    display: none;
-    max-width: 220px;
-    padding: 6px 10px;
+    gap: 2px;
+    width: max-content;
+    max-width: 200px;
+    padding: 7px 11px;
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    white-space: normal;
-    text-align: center;
+    border-radius: 9px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
     color: $color-text;
-    font-weight: 500;
-    line-height: 1.35;
-    pointer-events: auto;
+    pointer-events: none;
     z-index: 30;
   }
 
-  .open .tooltipLabel {
-    display: block;
+  .context:hover .tooltip,
+  .open .tooltip {
+    display: flex;
+  }
+
+  .tooltipYear {
+    order: 1;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: $color-accent;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tooltipLabel {
+    order: 2;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.35;
+    text-align: center;
+    color: $color-text;
   }
 
   // Above: всё над осью. row-reverse в flex меняет порядок detection.
@@ -182,9 +184,6 @@
   .below {
     .line { top: 0; height: 18px; }
     .bubble { top: 22px; }
-    .tooltip {
-      top: 60px;
-      flex-direction: column-reverse;
-    }
+    .tooltip { top: 60px; }
   }
 }

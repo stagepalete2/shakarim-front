@@ -10,6 +10,7 @@ export function TimelineEvent({
   image,
   imageAlt,
   position,
+  row = 0,
   isOpen,
   onToggle,
   id,
@@ -19,7 +20,7 @@ export function TimelineEvent({
   return (
     <div
       className={`${styles.event} ${isOpen ? styles.open : ""}`}
-      style={{ "--pos": `${position}%` }}
+      style={{ "--pos": `${position}%`, "--lane": row }}
     >
       <button
         type="button"
@@ -31,7 +32,8 @@ export function TimelineEvent({
       />
 
       <div className={styles.preview}>
-        <span className={styles.previewYear}>{displayYear}</span>
+        <span className={styles.previewLabel}>{displayYear}</span>
+        <span className={styles.previewYearNum}>{year}</span>
         <span className={styles.previewTitle}>{title}</span>
       </div>
 

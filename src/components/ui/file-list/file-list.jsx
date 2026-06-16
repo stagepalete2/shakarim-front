@@ -130,7 +130,7 @@ export function FileList({ items = [], title, className = "" }) {
 
       <ul className={styles.list}>
         {items.map((f, i) => (
-          <li key={f.url ?? `${f.name}-${i}`} className={styles.cell}>
+          <li key={`${f.url ?? f.name ?? "file"}-${i}`} className={styles.cell}>
             {f.type === "pdf" ? (
               <button
                 type="button"

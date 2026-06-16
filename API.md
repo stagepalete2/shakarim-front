@@ -73,9 +73,28 @@
   "tags": ["философия", "ар ілімі"],             // массив строк
   "file": { "url": "http://host/media/…pdf", "size": "8.2 МБ" }, // ? или null
   "excerpt": "…",                                 // ? строка
+
+  // === Литературный архив (миграция mura) — все поля опциональны ===
+  "body": "…",             // текст произведения: HTML (CKEditor) ИЛИ текст с \n (стихи)
+  "history": "<p>…</p>",   // ? история (HTML)
+  "textology": "<p>…</p>", // ? текстология (HTML)
+  "speaker": "…",          // ? декламатор/чтец
+  "school_book": "…",      // ? отметка о школьной программе
+  "audio": "http://…mp3",  // ? абс. URL аудио или null
+  "video_url": "https://youtu.be/…",                         // ? YouTube/Vimeo URL
+  "gallery": [ { "src": "http://…", "caption": "…" } ],       // ? сканы/иллюстрации
+  "glossary": [ { "word": "…", "definition": "<p>…</p>" } ],  // ? словарь; definition — HTML
+  "commentaries": [ { "author": "…", "body": "<p>…</p>" } ],  // ? түсініктемелер; body — HTML
+
   "related": [ /* 4 карточки той же категории */ ]
 }
 ```
+> Деталь рендерится вкладками (показываются только заполненные): текст (`body`),
+> «Тарихы» (`history`), «Текстология», «Түсініктемелер» (`commentaries`),
+> «Сөздік» (`glossary`), «Медиа» (`gallery`+`video_url`+`audio`), PDF (`file`).
+> `body` фронт показывает как HTML (если есть теги) либо как текст с переносами
+> строк (стихи). `history`/`textology`/`commentary.body`/`glossary.definition` —
+> rich-text (CKEditor).
 **`/works/categories/`:**
 ```jsonc
 [ { "category": "Поэмалары", "count": 7 } ]
@@ -444,6 +463,37 @@ archive, media, biography, shakarimtanu, tagzym`. **404**, если страни
 
 ---
 
+## 11. Search — Глобальный поиск
+
+| Метод | Путь | Параметры | Описание |
+|---|---|---|---|
+| GET | `/search/` | `q`, `lang?`, `type?`, `limit?` | поиск по всем разделам |
+
+- `q` — строка запроса. PostgreSQL FTS + триграммы (`pg_trgm`: опечатки и
+  частичные слова), по полям активного языка.
+- `lang` — язык полей (как везде; по умолч. `kk`). Фронт шлёт текущий язык.
+- `type` *(опц.)* — ограничить одним разделом (`works`/`books`/…).
+- `limit` *(опц.)* — лимит элементов на раздел.
+
+Ответ — результаты, **сгруппированные по разделам** (ключ — имя раздела):
+```jsonc
+{
+  "query": "üш",
+  "total": 12,
+  "results": {
+    "works":   [ { "id": 1, "slug": "ush-anyq", "title": "…" } ],
+    "books":   [ { "id": 3, "slug": "…",        "title": "…" } ],
+    "authors": [ { "id": "esim", "slug": "esim", "name": "…" } ]
+  }
+}
+```
+Фронту в каждом элементе нужны **`slug`** (ссылка на деталь) и **`title`/`name`**
+(подпись). Разделы без детального роута (`media`, `shakarimtanu`, `tagzym`,
+biography-composite) ведут на страницу раздела. Пусто →
+`{ "query": "…", "total": 0, "results": {} }`.
+
+---
+
 ## Сводная таблица эндпоинтов
 
 | Метод | Путь | Параметры | Доступ | Ответ |
@@ -469,6 +519,7 @@ archive, media, biography, shakarimtanu, tagzym`. **404**, если страни
 | GET | `/api/settings/` | — | public | объект |
 | GET | `/api/home/` | — | public | объект |
 | GET | `/api/pages/{key}/` | — | public | объект |
+| GET | `/api/search/` | `q,lang,type,limit` | public | объект |
 
 > Все эндпоинты — `GET`, без авторизации. Запись/редактирование контента — в
 > Django admin `/admin/` (требует аккаунт сотрудника), CKEditor — `/ckeditor5/`.

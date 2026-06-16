@@ -26,16 +26,22 @@
   // На мобилке — горизонтальная полоса чипов (ужe в works-filter).
 }
 
-.gridCol {
+.listCol {
   min-width: 0;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 14px 12px;
-  // overflow: visible нужен — иначе hover-popover клипается.
-  overflow: visible;
+// Список-панель: строки с разделителями внутри карточки с рамкой.
+.list {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.list > * + * {
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .empty {
@@ -59,30 +65,14 @@
   .layout {
     gap: 28px;
   }
-
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px 16px;
-  }
 }
 
-// === Desktop: master-detail style: фильтр-сайдбар слева + грид справа ===
+// === Desktop: master-detail: фильтр-сайдбар слева + список справа ===
 @include media-up($breakpoint-lg) {
   .layout {
     display: grid;
     grid-template-columns: 220px minmax(0, 1fr);
     gap: 40px;
     align-items: start;
-  }
-
-  .grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px 20px;
-  }
-}
-
-@include media-up($breakpoint-xl) {
-  .grid {
-    grid-template-columns: repeat(5, 1fr);
   }
 }

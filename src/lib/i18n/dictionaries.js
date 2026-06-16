@@ -35,6 +35,12 @@ const DICTIONARIES = {
       empty: "Таңдалған жанр бойынша туынды табылмады.",
       tabInfo: "Сипаттама",
       tabContent: "Контент",
+      tabText: "Мәтін",
+      tabHistory: "Тарихы",
+      tabTextology: "Текстология",
+      tabCommentaries: "Түсініктемелер",
+      tabGlossary: "Сөздік",
+      tabMedia: "Медиа",
       contentEmpty: "Бұл шығарманың цифрлық нұсқасы әзірге қол жетімсіз.",
       genre: "Жанры",
       year: "Жылы",
@@ -84,6 +90,10 @@ const DICTIONARIES = {
     article: {
       related: "Ұқсас мақалалар",
     },
+    search: {
+      noResults: "Ештеңе табылмады",
+      loading: "Ізделуде...",
+    },
   },
 
   ru: {
@@ -114,6 +124,12 @@ const DICTIONARIES = {
       empty: "По выбранному жанру работ не найдено.",
       tabInfo: "Описание",
       tabContent: "Контент",
+      tabText: "Текст",
+      tabHistory: "История",
+      tabTextology: "Текстология",
+      tabCommentaries: "Комментарии",
+      tabGlossary: "Словарь",
+      tabMedia: "Медиа",
       contentEmpty: "Цифровая версия этого произведения пока недоступна.",
       genre: "Жанр",
       year: "Год",
@@ -163,6 +179,10 @@ const DICTIONARIES = {
     article: {
       related: "Похожие статьи",
     },
+    search: {
+      noResults: "Ничего не найдено",
+      loading: "Поиск...",
+    },
   },
 
   en: {
@@ -193,6 +213,12 @@ const DICTIONARIES = {
       empty: "No works found for the selected genre.",
       tabInfo: "Description",
       tabContent: "Content",
+      tabText: "Text",
+      tabHistory: "History",
+      tabTextology: "Textology",
+      tabCommentaries: "Commentaries",
+      tabGlossary: "Glossary",
+      tabMedia: "Media",
       contentEmpty: "A digital version of this work is not available yet.",
       genre: "Genre",
       year: "Year",
@@ -241,6 +267,10 @@ const DICTIONARIES = {
     },
     article: {
       related: "Related articles",
+    },
+    search: {
+      noResults: "Nothing found",
+      loading: "Searching...",
     },
   },
 };

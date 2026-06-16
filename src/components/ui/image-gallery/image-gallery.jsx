@@ -37,7 +37,7 @@ export function ImageGallery({
 
       <ul className={styles.grid}>
         {items.map((item, i) => (
-          <li key={item.src ?? i} className={styles.cell}>
+          <li key={`${item.src ?? "img"}-${i}`} className={styles.cell}>
             <button
               type="button"
               className={styles.thumb}

@@ -5,7 +5,7 @@ import { CategoryFilter } from "@/components/ui/category-filter/category-filter"
 import { SectionHeader } from "@/components/ui/section-header/section-header"
 import { useMemo, useState } from "react"
 import { useTranslations } from "@/components/providers/language-provider"
-import { WorkCard } from "./components/work-card/work-card"
+import { WorkRow } from "./components/work-row/work-row"
 import styles from "./works.module.scss"
 
 // works — массив карточек, categories — [{ category, count }] (с сервера).
@@ -48,17 +48,16 @@ export function Works({ works = [], categories = [] }) {
           />
         </div>
 
-        <div className={styles.gridCol}>
+        <div className={styles.listCol}>
           {filtered.length > 0 ? (
-            <div className={styles.grid}>
+            <div className={styles.list}>
               {filtered.map((work) => (
-                <WorkCard
+                <WorkRow
                   key={work.id}
                   slug={work.slug}
                   title={work.title}
                   year={work.year}
                   category={work.category}
-                  cover={work.cover}
                   description={work.description}
                 />
               ))}

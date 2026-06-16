@@ -56,8 +56,8 @@ export function BioEnvironment({
 
           {facts.length > 0 && (
             <dl className={styles.facts}>
-              {facts.map((f) => (
-                <div key={f.label} className={styles.fact}>
+              {facts.map((f, i) => (
+                <div key={`${f.label ?? "fact"}-${i}`} className={styles.fact}>
                   <dt className={styles.factLabel}>{f.label}</dt>
                   <dd className={styles.factValue}>{f.value}</dd>
                 </div>

@@ -13,7 +13,7 @@ export function NavList({
       {...rest}
     >
       {items.map((item, i) => (
-        <li key={item.href ?? item.label ?? i} className={styles.item}>
+        <li key={`${item.href ?? item.label ?? "nav"}-${i}`} className={styles.item}>
           <NavLink href={item.href} onClick={item.onClick}>
             {item.label}
           </NavLink>

@@ -26,6 +26,15 @@ html {
 body {
   min-height: 100vh;
   min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+// Прижатый футер: основной контент растягивается, футер уходит вниз
+// даже на коротких страницах. main — прямой ребёнок body (провайдеры
+// не добавляют DOM-обёрток).
+main {
+  flex: 1 0 auto;
 }
 
 a {

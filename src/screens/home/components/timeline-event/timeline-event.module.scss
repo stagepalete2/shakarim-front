@@ -52,11 +52,16 @@
 }
 
 // На тёмно-бирюзовом — белый/полупрозрачный текст.
-.previewYear {
+.previewLabel {
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.04em;
   color: #fff;
+}
+
+// Числовой год — только на десктопе (компактная подпись под точкой).
+.previewYearNum {
+  display: none;
 }
 
 .previewTitle {
@@ -146,29 +151,49 @@
     transform: translate(-50%, -50%) scale(1.25);
   }
 
+  // top зависит от дорожки (--lane): близкие годы опускаются ниже и не
+  // налезают друг на друга. Тонкий вертикальный «поводок» связывает год с точкой.
   .preview {
     position: absolute;
     left: 50%;
-    top: 16px; // ниже линии
+    top: calc(16px + var(--lane, 0) * 16px);
     transform: translateX(-50%);
     display: block;
     text-align: center;
     white-space: nowrap;
   }
 
-  .previewYear {
-    display: block;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.7);
+  // Поводок от точки к подписи в нижних дорожках.
+  .event[style*="--lane"] .preview::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    width: 1px;
+    height: calc(var(--lane, 0) * 16px);
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(-50%);
   }
 
-  .previewTitle {
-    // На десктопе подписи под dot-ами могут пересекаться — скрываем,
-    // полный заголовок виден в карточке.
+  // Десктоп: под точкой — только короткий числовой год (слова-подписи
+  // и заголовок ушли в карточку, чтобы соседние события не налезали).
+  .previewLabel {
     display: none;
   }
 
-  .open .previewYear {
+  .previewYearNum {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .previewTitle {
+    display: none;
+  }
+
+  .open .previewYearNum {
     color: #fff;
     font-weight: 700;
   }

@@ -25,7 +25,6 @@ export function Timeline({
   // Объединяем и сортируем по году. На мобилке это даёт хронологический поток,
   // на десктопе порядок не важен (всё absolute по year-pos).
   const items = useMemo(() => {
-    let ctxIdx = 0;
     const merged = [
       ...events.map((ev, idx) => ({
         kind: "event",
@@ -39,13 +38,20 @@ export function Timeline({
       })),
     ];
     merged.sort((a, b) => a.data.year - b.data.year);
+    // Контекст-события — всегда над осью (они разрежены, не пересекаются).
+    // Подписи годов событий раскладываем по «дорожкам» под осью: если год
+    // ближе MIN_GAP лет к последнему в дорожке — опускаем на следующую.
+    // Так любые близкие годы (1905/1906, 1991/1992) не налезают друг на друга.
+    const MIN_GAP = 8;
+    const laneLastYear = [];
     return merged.map((item) => {
       if (item.kind === "context") {
-        const side = ctxIdx % 2 === 0 ? "above" : "below";
-        ctxIdx += 1;
-        return { ...item, side };
+        return { ...item, side: "above" };
       }
-      return item;
+      let lane = laneLastYear.findIndex((y) => item.data.year - y >= MIN_GAP);
+      if (lane === -1) lane = laneLastYear.length;
+      laneLastYear[lane] = item.data.year;
+      return { ...item, row: lane };
     });
   }, [events, contextEvents]);
 
@@ -90,6 +96,7 @@ export function Timeline({
               image={item.data.image}
               imageAlt={item.data.imageAlt}
               position={pos}
+              row={item.row}
               isOpen={openId === id}
               onToggle={() =>
                 setOpenId(openId === id ? null : id)
