@@ -336,9 +336,22 @@
   "videos": [ { /* video item */ } ],
   "films":  [ { /* как video */ } ],
   "audio":  [ { /* audio item */ } ],
-  "photos": [ { /* photo item */ } ]
+  "photos": [ { /* секция фото — см. ниже */ } ]
 }
 ```
+> **`photos` — массив именованных секций** (не плоский список). Каждая секция:
+> `{ id, title, items: [photo] }`, где `title` — локализуемое имя секции
+> («Тарихи фотосуреттер», «Иллюстрациялар» и т.п.), `items` — фото этой секции.
+> Фронт рендерит по галерее на каждую секцию с её заголовком. (Поддерживает и
+> старый плоский массив фото — заворачивает в одну безымянную секцию.)
+> ```jsonc
+> "photos": [
+>   { "id": "historical", "title": "Тарихи фотосуреттер",
+>     "items": [ { "id":"p1", "title":"…", "src":"http://host/…",
+>                  "caption":"…", "description":"…", "year":1905, "author":"…" } ] },
+>   { "id": "illustrations", "title": "Иллюстрациялар", "items": [ … ] }
+> ]
+> ```
 **Общие поля item** (`id` и `title` обязательны, остальное `?`):
 `id, title, author, year, date, description, thumbnail, duration,
 tags[], links[{label,url}], attachments[{name,url,size,type}]`.

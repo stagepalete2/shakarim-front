@@ -20,23 +20,34 @@ function ActivePanel({ tabId, media }) {
       return <VideoGrid items={media.films ?? []} />;
     case "audio":
       return <AudioList items={media.audio ?? []} />;
-    case "photos":
-      // Instagram-стиль: квадратные миниатюры с подписями + lightbox.
-      // ImageGallery умеет читать `description` в lightbox-подвале.
+    case "photos": {
+      // photos — массив именованных секций { id, title, items:[…] }.
+      // Старый плоский формат (массив фото) заворачиваем в одну безымянную секцию.
+      const sections = Array.isArray(media.photos?.[0]?.items)
+        ? media.photos
+        : [{ id: "all", items: media.photos ?? [] }];
+
       return (
-        <ImageGallery
-          items={(media.photos ?? []).map((p) => ({
-            src: p.src,
-            caption: p.title,
-            description: [p.year, p.author, p.description]
-              .filter(Boolean)
-              .join(" · "),
-          }))}
-          aspectRatio="1 / 1"
-          showCaptions
-          showHoverHint
-        />
+        <div className={styles.photoSections}>
+          {sections.map((section, i) => (
+            <ImageGallery
+              key={section.id ?? i}
+              title={section.title}
+              items={(section.items ?? []).map((p) => ({
+                src: p.src,
+                caption: p.title,
+                description: [p.year, p.author, p.description]
+                  .filter(Boolean)
+                  .join(" · "),
+              }))}
+              aspectRatio="1 / 1"
+              showCaptions
+              showHoverHint
+            />
+          ))}
+        </div>
       );
+    }
     default:
       return null;
   }
@@ -47,6 +58,12 @@ export function Media({ media = {} }) {
   const t = useTranslations();
   const [activeTab, setActiveTab] = useState(MEDIA_TABS[0]?.id ?? "videos");
   const activeMeta = MEDIA_TABS.find((tab) => tab.id === activeTab);
+
+  // У фото-вкладки секции приходят с бэка со своими заголовками — общий
+  // статичный longLabel тогда не нужен (его заменяют названия секций).
+  const photosSectioned =
+    activeTab === "photos" && Array.isArray(media.photos?.[0]?.items);
+  const showPanelHead = Boolean(activeMeta?.longLabel) && !photosSectioned;
 
   const breadcrumbs = [
     { label: t("common.home"), href: "/" },
@@ -77,7 +94,7 @@ export function Media({ media = {} }) {
         // дочерних компонентов между табами.
         key={activeTab}
       >
-        {activeMeta?.longLabel && (
+        {showPanelHead && (
           <header className={styles.panelHead}>
             <span className={styles.panelNumber}>{activeMeta.number}</span>
             <h2 className={styles.panelTitle}>{activeMeta.longLabel}</h2>
