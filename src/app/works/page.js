@@ -1,10 +1,15 @@
 import { Works } from "@/screens/works/works";
 import { fetchWorks, fetchWorksCategories } from "@/lib/endpoints/works";
 
+const title = "Шығармалары — Шәкәрім Құдайбердіұлы";
+const description =
+  "Произведения Шакарима Кудайбердиева: поэмы, философские труды, переводы, песни и кюи.";
+
 export const metadata = {
-  title: "Шығармалары — Шәкәрім Құдайбердіұлы",
-  description:
-    "Произведения Шакарима Кудайбердиева: поэмы, философские труды, переводы, песни и кюи.",
+  title,
+  description,
+  alternates: { canonical: "/works" },
+  openGraph: { title, description, url: "/works" },
 };
 
 export default async function WorksPage() {
