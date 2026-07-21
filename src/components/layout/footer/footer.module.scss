@@ -91,6 +91,15 @@
   color: rgba(17, 17, 17, 0.45);
 }
 
+// Грантовая подпись (научный проект). Читаемый белый текст на акцентном фоне.
+.grant {
+  max-width: 900px;
+  margin: 0 auto 10px;
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+}
+
 // === Desktop: три блока в ряд, ссылки в «таблице» 2 колонок ===
 @include media-up($breakpoint-md) {
   .inner {

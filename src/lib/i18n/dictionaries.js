@@ -94,6 +94,10 @@ const DICTIONARIES = {
       noResults: "Ештеңе табылмады",
       loading: "Ізделуде...",
     },
+    footer: {
+      grant:
+        "BR28712491 «Шәкәрім Құдайбердіұлының рухани мұрасын әдеби-мәдени, тарихи-этнографиялық, географиялық, лингвистикалық тұрғыдан кешенді зерттеу: цифрлық интеграция және этнотуризм» ғылыми жобасы аясында әзірленді",
+    },
   },
 
   ru: {
@@ -183,6 +187,10 @@ const DICTIONARIES = {
       noResults: "Ничего не найдено",
       loading: "Поиск...",
     },
+    footer: {
+      grant:
+        "Разработано в рамках научного проекта BR28712491 «Комплексное исследование духовного наследия Шакарима Кудайбердиева с литературно-культурной, историко-этнографической, географической и лингвистической точек зрения: цифровая интеграция и этнотуризм»",
+    },
   },
 
   en: {
@@ -271,6 +279,10 @@ const DICTIONARIES = {
     search: {
       noResults: "Nothing found",
       loading: "Searching...",
+    },
+    footer: {
+      grant:
+        "Prepared within the framework of the scientific project BR28712491 “Comprehensive study of the spiritual heritage of Shakarim Qudayberdiuli from literary-cultural, historical-ethnographic, geographical and linguistic perspectives: digital integration and ethnotourism”",
     },
   },
 };

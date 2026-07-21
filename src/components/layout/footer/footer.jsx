@@ -1,5 +1,6 @@
 import { Logo } from "@/components/ui/logo/logo"
 import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link"
+import { getT } from "@/lib/i18n/server"
 import styles from "./footer.module.scss"
 import {
   InstagramIcon,
@@ -17,7 +18,8 @@ const SOCIAL_ICONS = {
 };
 
 // settings — глобальные настройки (см. API.md §10.1).
-export function Footer({ settings = {} }) {
+export async function Footer({ settings = {} }) {
+  const t = await getT();
   const logo = settings.logo ?? "/icons/logo.png";
   const title = settings.siteTitle ?? { line1: "Shakarim", line2: "Kudaiberdiuly" };
   const footer = settings.footer ?? {};
@@ -72,6 +74,7 @@ export function Footer({ settings = {} }) {
       </div>
 
       <div className={styles.bottom}>
+        <p className={styles.grant}>{t("footer.grant")}</p>
         <p>© {new Date().getFullYear()} {copyright}</p>
       </div>
     </footer>
