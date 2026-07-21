@@ -1,11 +1,14 @@
-import { cookies } from "next/headers";
-import { LANG_COOKIE, normalizeLang } from "./config";
+import { cookies, headers } from "next/headers";
+import { LANGS, LANG_COOKIE, LANG_HEADER, normalizeLang } from "./config";
 import { getDictionary } from "./dictionaries";
 
-// Текущий язык из cookie — для серверных компонентов (Next 16: cookies() async).
-// Вызов делает страницу динамической (рендер на каждый запрос) — это ожидаемо
-// для cookie-локализации.
+// Текущий язык. Источник истины — сегмент URL, который proxy кладёт в
+// заголовок x-lang. Фолбэк — cookie (напр. для метадата-роутов без proxy).
+// Чтение headers()/cookies() делает рендер динамическим — это ожидаемо.
 export async function getLang() {
+  const h = await headers();
+  const fromHeader = h.get(LANG_HEADER);
+  if (LANGS.includes(fromHeader)) return fromHeader;
   const store = await cookies();
   return normalizeLang(store.get(LANG_COOKIE)?.value);
 }

@@ -1,10 +1,11 @@
 "use client";
 
 import { createContext, useCallback, useContext } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   DEFAULT_LANG,
   LANG_COOKIE,
+  LANGS,
   normalizeLang,
 } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
@@ -15,20 +16,24 @@ const LanguageContext = createContext({
   t: (key) => key,
 });
 
-// lang приходит с сервера (cookie прочитан в layout). При смене языка пишем
-// cookie и router.refresh() — серверные компоненты перечитывают данные на
-// новом языке, форма ответа не меняется.
+// lang приходит с сервера (сегмент [lang] в layout). При смене языка переходим
+// на тот же путь со сменой префикса локали и запоминаем выбор в cookie
+// (proxy читает его при заходе на "/").
 export function LanguageProvider({ lang: initialLang, children }) {
   const router = useRouter();
+  const pathname = usePathname();
   const lang = normalizeLang(initialLang);
 
   const setLang = useCallback(
     (next) => {
       const value = normalizeLang(next);
       document.cookie = `${LANG_COOKIE}=${value}; path=/; max-age=31536000; samesite=lax`;
-      router.refresh();
+      const parts = pathname.split("/");
+      if (LANGS.includes(parts[1])) parts[1] = value;
+      else parts.splice(1, 0, value);
+      router.push(parts.join("/") || `/${value}`);
     },
-    [router],
+    [pathname, router],
   );
 
   const dict = getDictionary(lang);

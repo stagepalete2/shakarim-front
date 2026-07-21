@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link";
 import { api } from "@/lib/api";
 import {
   useLanguage,

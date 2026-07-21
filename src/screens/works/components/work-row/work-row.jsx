@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link";
 import { workHref } from "@/lib/works";
 import styles from "./work-row.module.scss";
 

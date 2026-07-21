@@ -53,7 +53,7 @@ export function shakarimPersonSchema(lang = "kk") {
     deathDate: "1931-10-02",
     jobTitle: PERSON_JOB[lang] ?? PERSON_JOB.kk,
     description: PERSON_DESC[lang] ?? PERSON_DESC.kk,
-    url: `${SITE_URL}/biography`,
+    url: absoluteUrl(`/${lang}/biography`),
     sameAs: [
       "https://kk.wikipedia.org/wiki/Шәкәрім_Құдайбердіұлы",
       "https://ru.wikipedia.org/wiki/Кудайбердиев,_Шакарим",
@@ -90,7 +90,7 @@ export function creativeWorkSchema(work, lang = "kk") {
     ...(work.category && { genre: work.category }),
     inLanguage: lang,
     author: shakarimNode(lang),
-    url: absoluteUrl(`/works/${work.slug}`),
+    url: absoluteUrl(`/${lang}/works/${work.slug}`),
     isPartOf: websiteNode,
   };
 }
@@ -107,13 +107,13 @@ export function bookSchema(book, lang = "kk") {
     ...(book.cover && { image: book.cover }),
     ...(book.year && { datePublished: String(book.year) }),
     inLanguage: lang,
-    url: absoluteUrl(`/books/${book.slug}`),
+    url: absoluteUrl(`/${lang}/books/${book.slug}`),
     isPartOf: websiteNode,
   };
 }
 
 // Автор/исследователь (/authors/{slug}) — обычная Person (не Шәкәрім).
-export function authorPersonSchema(author) {
+export function authorPersonSchema(author, lang = "kk") {
   const description = clean(author.fullBio ?? author.bio);
   return {
     "@context": "https://schema.org",
@@ -122,14 +122,14 @@ export function authorPersonSchema(author) {
     ...(author.role && { jobTitle: author.role }),
     ...(description && { description }),
     ...(author.photo && { image: author.photo }),
-    url: absoluteUrl(`/authors/${author.slug}`),
+    url: absoluteUrl(`/${lang}/authors/${author.slug}`),
   };
 }
 
 // Статья биографии (/biography/{slug}, питается из /articles/).
 export function articleSchema(article, lang = "kk") {
   const tags = Array.isArray(article.tags) ? article.tags.filter(Boolean) : [];
-  const url = absoluteUrl(`/biography/${article.slug}`);
+  const url = absoluteUrl(`/${lang}/biography/${article.slug}`);
   return {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -161,7 +161,7 @@ export function archiveSchema(item, lang = "kk") {
     }),
     inLanguage: lang,
     about: shakarimNode(lang),
-    url: absoluteUrl(`/archive/${item.slug}`),
+    url: absoluteUrl(`/${lang}/archive/${item.slug}`),
     isPartOf: websiteNode,
   };
 }

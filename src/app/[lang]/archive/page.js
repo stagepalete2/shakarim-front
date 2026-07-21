@@ -5,12 +5,16 @@ const title = "Архив және қолжазба — Шәкәрім";
 const description =
   "Шәкәрім Құдайбердіұлының архивтік мұрасы: қолжазбалар, фотосуреттер, хаттар, аудио және бейне жазбалар.";
 
-export const metadata = {
-  title,
-  description,
-  alternates: { canonical: "/archive" },
-  openGraph: { title, description, url: "/archive" },
-};
+export async function generateMetadata({ params }) {
+  const { lang } = await params;
+  const path = `/${lang}/archive`;
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { title, description, url: path },
+  };
+}
 
 export default async function ArchivePage() {
   const [items, types] = await Promise.all([

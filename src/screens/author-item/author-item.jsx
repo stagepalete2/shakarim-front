@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link";
 import { useMemo, useState } from "react";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs/breadcrumbs";
 import { Image } from "@/components/ui/image/image";

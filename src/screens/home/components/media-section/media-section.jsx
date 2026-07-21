@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link";
 import { AudioCard } from "@/components/ui/audio-card/audio-card";
 import { SectionHeader } from "@/components/ui/section-header/section-header";
 import { Slider } from "@/components/ui/slider/slider";

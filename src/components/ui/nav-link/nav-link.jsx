@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link"
 import styles from "./nav-link.module.scss"
 
 export function NavLink({ href, children, className = "", ...rest }) {

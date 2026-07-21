@@ -1,17 +1,19 @@
 import { SITE_URL } from "@/lib/site";
+import { LANGS, DEFAULT_LANG } from "@/lib/i18n/config";
 import { fetchWorks } from "@/lib/endpoints/works";
 import { fetchBooks } from "@/lib/endpoints/books";
 import { fetchAuthors } from "@/lib/endpoints/authors";
 import { fetchArticles } from "@/lib/endpoints/articles";
 import { fetchArchive } from "@/lib/endpoints/archive";
 
-// sitemap.xml (Next file-convention). Статические разделы + детальные страницы,
-// slug'и которых берём из API. Каждый источник обёрнут в safe(): если бэкенд
-// недоступен на билде — карта деградирует до статических маршрутов, сборка не
-// падает (бэкенд при этом не меняется, только читается).
+// sitemap.xml (Next file-convention). Каждый маршрут отдаётся во всех локалях
+// (/kk, /ru, /en) с hreflang-альтернативами — Google берёт языковые версии прямо
+// из карты. Детальные страницы тянут slug'и из API; каждый источник обёрнут в
+// safe(): при недоступном бэкенде карта деградирует до статических маршрутов
+// (бэкенд не меняется, только читается).
 
 const STATIC_ROUTES = [
-  { path: "/", priority: 1.0, changeFrequency: "weekly" },
+  { path: "", priority: 1.0, changeFrequency: "weekly" },
   { path: "/biography", priority: 0.9, changeFrequency: "monthly" },
   { path: "/works", priority: 0.9, changeFrequency: "monthly" },
   { path: "/archive", priority: 0.8, changeFrequency: "monthly" },
@@ -22,20 +24,36 @@ const STATIC_ROUTES = [
   { path: "/authors", priority: 0.7, changeFrequency: "monthly" },
 ];
 
-// Безопасно получить список и превратить его в записи sitemap.
-// prefix — базовый путь раздела ("/works"); items ожидаются как [{ slug, date? }].
-async function safe(loader, prefix, { priority = 0.7, changeFrequency = "monthly" } = {}) {
+// Одна запись на локаль для маршрута + общий hreflang-набор (kk/ru/en + x-default).
+function localizedEntries(path, lastModified, { priority = 0.7, changeFrequency = "monthly" } = {}) {
+  const languages = Object.fromEntries(
+    LANGS.map((l) => [l, `${SITE_URL}/${l}${path}`]),
+  );
+  languages["x-default"] = `${SITE_URL}/${DEFAULT_LANG}${path}`;
+
+  return LANGS.map((l) => ({
+    url: `${SITE_URL}/${l}${path}`,
+    lastModified,
+    changeFrequency,
+    priority,
+    alternates: { languages },
+  }));
+}
+
+// Безопасно получить список и развернуть в записи sitemap по всем локалям.
+async function safe(loader, prefix, opts = {}) {
   try {
     const list = await loader();
     if (!Array.isArray(list)) return [];
     return list
       .filter((item) => item && typeof item.slug === "string" && item.slug)
-      .map((item) => ({
-        url: `${SITE_URL}${prefix}/${item.slug}`,
-        lastModified: item.date ? new Date(item.date) : new Date(),
-        changeFrequency,
-        priority,
-      }));
+      .flatMap((item) =>
+        localizedEntries(
+          `${prefix}/${item.slug}`,
+          item.date ? new Date(item.date) : new Date(),
+          opts,
+        ),
+      );
   } catch {
     return [];
   }
@@ -43,12 +61,9 @@ async function safe(loader, prefix, { priority = 0.7, changeFrequency = "monthly
 
 export default async function sitemap() {
   const now = new Date();
-  const staticEntries = STATIC_ROUTES.map((r) => ({
-    url: `${SITE_URL}${r.path}`,
-    lastModified: now,
-    changeFrequency: r.changeFrequency,
-    priority: r.priority,
-  }));
+  const staticEntries = STATIC_ROUTES.flatMap((r) =>
+    localizedEntries(r.path, now, r),
+  );
 
   const [works, books, authors, articles, archive] = await Promise.all([
     safe(fetchWorks, "/works", { priority: 0.7 }),

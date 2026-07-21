@@ -8,12 +8,16 @@ const title = "Ғұмырнама — Шәкәрім Құдайбердіұлы"
 const description =
   "Жизненный путь Шакарима Кудайбердиева: от рождения в Чингизских горах до посмертной реабилитации.";
 
-export const metadata = {
-  title,
-  description,
-  alternates: { canonical: "/biography" },
-  openGraph: { title, description, url: "/biography" },
-};
+export async function generateMetadata({ params }) {
+  const { lang } = await params;
+  const path = `/${lang}/biography`;
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: { title, description, url: path },
+  };
+}
 
 export default async function BiographyPage() {
   const [bio, lang] = await Promise.all([fetchBiography(), getLang()]);

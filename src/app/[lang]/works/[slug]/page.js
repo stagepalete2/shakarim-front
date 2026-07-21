@@ -1,17 +1,16 @@
 import { notFound } from "next/navigation";
 import { WorkItem } from "@/screens/work-item/work-item";
 import { fetchWork } from "@/lib/endpoints/works";
-import { getLang } from "@/lib/i18n/server";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { JsonLd } from "@/components/seo/json-ld";
 import { creativeWorkSchema, breadcrumbSchema, clean } from "@/lib/seo-schemas";
 
 export async function generateMetadata({ params }) {
-  const { slug } = await params;
+  const { lang, slug } = await params;
   const work = await fetchWork(slug);
   if (!work) return { title: "Шығарма табылмады" };
   const description = clean(work.description ?? work.excerpt) ?? work.title;
-  const canonical = `/works/${slug}`;
+  const canonical = `/${lang}/works/${slug}`;
   return {
     title: `${work.title} — Шәкәрім шығармалары`,
     description,
@@ -27,9 +26,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function WorkItemPage({ params }) {
-  const { slug } = await params;
+  const { lang, slug } = await params;
   // related приходит внутри детали (API.md §1).
-  const [work, lang] = await Promise.all([fetchWork(slug), getLang()]);
+  const work = await fetchWork(slug);
   if (!work) notFound();
 
   const dict = getDictionary(lang);
@@ -38,9 +37,9 @@ export default async function WorkItemPage({ params }) {
       <JsonLd data={creativeWorkSchema(work, lang)} />
       <JsonLd
         data={breadcrumbSchema([
-          { name: dict.common.home, path: "/" },
-          { name: dict.pages.works, path: "/works" },
-          { name: work.title, path: `/works/${slug}` },
+          { name: dict.common.home, path: `/${lang}` },
+          { name: dict.pages.works, path: `/${lang}/works` },
+          { name: work.title, path: `/${lang}/works/${slug}` },
         ])}
       />
       <WorkItem work={work} related={work.related ?? []} />

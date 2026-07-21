@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link";
 import styles from "./breadcrumbs.module.scss";
 
 export function Breadcrumbs({ items = [], className = "" }) {

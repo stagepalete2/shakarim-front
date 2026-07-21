@@ -1,5 +1,5 @@
 import { Logo } from "@/components/ui/logo/logo"
-import Link from "next/link"
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link"
 import styles from "./footer.module.scss"
 import {
   InstagramIcon,

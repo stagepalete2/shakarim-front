@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link";
 import { Image } from "@/components/ui/image/image";
 import { ArchiveTypeIcon } from "@/components/ui/archive-type-icon/archive-type-icon";
 import { archiveHref, getTypeMeta } from "@/lib/archive";

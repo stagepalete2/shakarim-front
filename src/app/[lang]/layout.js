@@ -1,4 +1,4 @@
-import "./globals.scss";
+import "../globals.scss";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { LanguageProvider } from "@/components/providers/language-provider";
 import { Header } from "@/components/layout/header/header";
@@ -6,13 +6,17 @@ import { SubHeader } from "@/components/layout/sub-header/sub-header";
 import { Footer } from "@/components/layout/footer/footer";
 import { JsonLd } from "@/components/seo/json-ld";
 import { fetchSettings } from "@/lib/endpoints/pages";
-import { getLang } from "@/lib/i18n/server";
+import { LANGS, normalizeLang } from "@/lib/i18n/config";
 import { SITE_URL, SITE_NAME, OG_LOCALE, SITE_SEO } from "@/lib/site";
 
-// generateMetadata (а не статический metadata): язык берём из cookie, чтобы
-// заголовок/описание/og:locale совпадали с рендерящимся языком страницы.
-export async function generateMetadata() {
-  const lang = await getLang();
+// Пререндер по одной статической ветке на каждый язык.
+export function generateStaticParams() {
+  return LANGS.map((lang) => ({ lang }));
+}
+
+// Язык берём из сегмента URL ([lang]) — источник истины для локали.
+export async function generateMetadata({ params }) {
+  const lang = normalizeLang((await params).lang);
   const seo = SITE_SEO[lang] ?? SITE_SEO.kk;
   return {
     metadataBase: new URL(SITE_URL),
@@ -22,7 +26,7 @@ export async function generateMetadata() {
     openGraph: {
       type: "website",
       siteName: SITE_NAME,
-      url: SITE_URL,
+      url: `${SITE_URL}/${lang}`,
       locale: OG_LOCALE[lang] ?? OG_LOCALE.kk,
       title: seo.title,
       description: seo.description,
@@ -44,9 +48,9 @@ export async function generateMetadata() {
   };
 }
 
-export default async function RootLayout({ children }) {
-  // Язык (cookie) и глобальные настройки — на всех страницах.
-  const lang = await getLang();
+export default async function RootLayout({ children, params }) {
+  const lang = normalizeLang((await params).lang);
+  // Глобальные настройки — язык apiGet берёт из заголовка x-lang (proxy).
   const settings = await fetchSettings();
 
   const websiteSchema = {

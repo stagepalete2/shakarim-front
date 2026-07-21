@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/ui/locale-link/locale-link";
 import { Image } from "@/components/ui/image/image";
 import styles from "./book-card.module.scss";
 
